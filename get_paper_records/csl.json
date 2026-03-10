@@ -1,0 +1,198 @@
+[
+  {
+    "DOI": "10.1109/slt61566.2024.10832263",
+    "URL": "https://arxiv.org/abs/2409.10076",
+    "author": [
+      {
+        "family": "Liu",
+        "given": "Shuiyun"
+      },
+      {
+        "family": "Kong",
+        "given": "Yuxiang"
+      },
+      {
+        "family": "Guo",
+        "given": "Pengcheng"
+      },
+      {
+        "family": "Zhuang",
+        "given": "Weiji"
+      },
+      {
+        "family": "Gao",
+        "given": "Peng"
+      },
+      {
+        "family": "Wang",
+        "given": "Yujun"
+      },
+      {
+        "family": "Xie",
+        "given": "Lei"
+      }
+    ],
+    "container-title": "IEEE Workshop on Spoken Language Technology",
+    "id": "recqIcsUP2",
+    "issued": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "page": "578-585",
+    "publisher": "IEEE",
+    "title": "Optimizing Dysarthria Wake-Up Word Spotting: an End-to-End Approach For SLT 2024 LRDWWS Challenge",
+    "title-short": "Optimizing Dysarthria Wake-Up Word Spotting",
+    "type": "proceedings-article",
+    "volume": ""
+  },
+  {
+    "DOI": "10.1109/iscslp57327.2022.10037585",
+    "URL": "",
+    "author": [
+      {
+        "family": "Song",
+        "given": "Kun"
+      },
+      {
+        "family": "Xue",
+        "given": "Heyang"
+      },
+      {
+        "family": "Wang",
+        "given": "Xinsheng"
+      },
+      {
+        "family": "Cong",
+        "given": "Jian"
+      },
+      {
+        "family": "Zhang",
+        "given": "Yongmao"
+      },
+      {
+        "family": "Xie",
+        "given": "Lei"
+      },
+      {
+        "family": "Yang",
+        "given": "Bing"
+      },
+      {
+        "family": "Zhang",
+        "given": "Xiong"
+      },
+      {
+        "family": "Su",
+        "given": "Dan"
+      }
+    ],
+    "container-title": "ISCSLP",
+    "id": "recNdHjeDH",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "319-323",
+    "publisher": "IEEE",
+    "title": "AdaVITS: Tiny VITS for Low Computing Resource Speaker Adaptation",
+    "title-short": "AdaVITS",
+    "type": "proceedings-article",
+    "volume": ""
+  },
+  {
+    "DOI": "10.1016/j.specom.2024.103103",
+    "URL": "https://arxiv.org/abs/2407.10048",
+    "author": [
+      {
+        "family": "Zhang",
+        "given": "Li"
+      },
+      {
+        "family": "Jiang",
+        "given": "Ning"
+      },
+      {
+        "family": "Wang",
+        "given": "Qing"
+      },
+      {
+        "family": "Li",
+        "given": "Yue"
+      },
+      {
+        "family": "Lu",
+        "given": "Quan"
+      },
+      {
+        "family": "Xie",
+        "given": "Lei"
+      }
+    ],
+    "container-title": "Speech Communication",
+    "id": "recTXkzmEY",
+    "issued": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "page": "103103",
+    "publisher": "Elsevier BV",
+    "title": "Whisper-SV: Adapting Whisper for low-data-resource speaker verification",
+    "title-short": "Whisper-SV",
+    "type": "journal-article",
+    "volume": "163"
+  },
+  {
+    "DOI": "10.1016/j.specom.2024.103103",
+    "URL": "",
+    "author": [
+      {
+        "family": "Zhang",
+        "given": "Li"
+      },
+      {
+        "family": "Jiang",
+        "given": "Ning"
+      },
+      {
+        "family": "Wang",
+        "given": "Qing"
+      },
+      {
+        "family": "Li",
+        "given": "Yue"
+      },
+      {
+        "family": "Lu",
+        "given": "Quan"
+      },
+      {
+        "family": "Xie",
+        "given": "Lei"
+      }
+    ],
+    "container-title": "Speech Communication",
+    "id": "recucQjkbo",
+    "issued": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "page": "103103",
+    "publisher": "Elsevier BV",
+    "title": "Whisper-SV: Adapting Whisper for low-data-resource speaker verification",
+    "title-short": "Whisper-SV",
+    "type": "journal-article",
+    "volume": "163"
+  }
+]

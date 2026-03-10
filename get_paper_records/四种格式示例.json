@@ -1,0 +1,315 @@
+{
+    "code": 0,
+    "data": {
+        "has_more": false,
+        "items": [
+            {
+                "fields": {
+                    "CCF等级": [
+                        {
+                            "text": "无",
+                            "type": "text"
+                        }
+                    ],
+                    "Camera-Ready版": [
+                        {
+                            "file_token": "DXWObREFBoCaCJxrLcLckXDHnWd",
+                            "name": "Optimizing_Dysarthria_Wake-Up_Word_Spotting_an_End-to-End_Approach_For_SLT_2024_LRDWWS_Challenge.pdf",
+                            "size": 490898,
+                            "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=DXWObREFBoCaCJxrLcLckXDHnWd",
+                            "type": "application/pdf",
+                            "url": "https://open.feishu.cn/open-apis/drive/v1/medias/DXWObREFBoCaCJxrLcLckXDHnWd/download"
+                        }
+                    ],
+                    "EI 检索号": "20250717859854",
+                    "SCI 检索号": "WOS:001440556800078",
+                    "会议名称": [
+                        {
+                            "text": "IEEE Workshop on Spoken Language Technology",
+                            "type": "text"
+                        }
+                    ],
+                    "会议简称": [
+                        {
+                            "text": "SLT",
+                            "type": "text"
+                        }
+                    ],
+                    "作者列表": [
+                        {
+                            "text": "Shuiyun Liu, Yuxiang Kong, Pengcheng Guo, Weiji Zhuang, Peng Gao, Yujun Wang, Lei Xie",
+                            "type": "text"
+                        }
+                    ],
+                    "公众号链接": {
+                        "link": "https://mp.weixin.qq.com/s/LtpUV30LdbSoo6vZanGoqQ",
+                        "text": "https://mp.weixin.qq.com/s/LtpUV30LdbSoo6vZanGoqQ"
+                    },
+                    "创建人": {
+                        "email": "",
+                        "en_name": "资政",
+                        "id": "ou_a7479cee00905e085ccc66a49ae5af0e",
+                        "name": "资政"
+                    },
+                    "合作单位": [
+                        {
+                            "text": "小米",
+                            "type": "text"
+                        }
+                    ],
+                    "年份": [
+                        1733068800000
+                    ],
+                    "投稿信息": [
+                        {
+                            "record_ids": [
+                                "recH0HHqwJ"
+                            ],
+                            "table_id": "tbll47YBcaXU7pw4",
+                            "text": "Optimizing Dysarthria Wake-Up Word Spotting: an End-to-End Approach For SLT 2024 LRDWWS Challenge",
+                            "text_arr": [
+                                "Optimizing Dysarthria Wake-Up Word Spotting: an End-to-End Approach For SLT 2024 LRDWWS Challenge"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "投稿版": [
+                        {
+                            "attachmentToken": "FFclbVFTLorE8oxsboOcvmSUnbD",
+                            "extra": "{\"bitablePerm\":{\"tableId\":\"tbl0i3cUUApY0ugH\",\"rev\":558,\"attachments\":{\"fldWe2QTSL\":{\"recqIcsUP2\":[\"FFclbVFTLorE8oxsboOcvmSUnbD\"]}}}}",
+                            "id": "FFclbVFTLorE8oxsboOcvmSUnbD",
+                            "mimeType": "application/pdf",
+                            "name": "Optimizing_Dysarthria_Wake-Up_Word_Spotting_an_End-to-End_Approach_For_SLT_2024_LRDWWS_Challenge.pdf",
+                            "size": 490898,
+                            "timeStamp": 1770969687415
+                        }
+                    ],
+                    "论文avxiv链接": {
+                        "link": "https://arxiv.org/abs/2409.10076",
+                        "text": "https://arxiv.org/abs/2409.10076"
+                    },
+                    "论文名称": [
+                        {
+                            "text": "Optimizing Dysarthria Wake-Up Word Spotting: an End-to-End Approach For SLT 2024 LRDWWS Challenge",
+                            "type": "text"
+                        }
+                    ],
+                    "论文奖项": " 低资源唤醒词识别（LRDWWS）挑战赛 冠军",
+                    "通讯作者": [
+                        {
+                            "text": "Lei Xie",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "id": "recqIcsUP2",
+                "record_id": "recqIcsUP2"
+            },
+            {
+                "fields": {
+                    "CCF等级": [
+                        {
+                            "text": "无",
+                            "type": "text"
+                        }
+                    ],
+                    "会议举办时间": 1670688000000,
+                    "会议全称": [
+                        {
+                            "text": "International Symposium on Chinese Spoken Language Processing",
+                            "type": "text"
+                        }
+                    ],
+                    "会议名称": [
+                        {
+                            "record_ids": [
+                                "recv9thuv0ynIE"
+                            ],
+                            "table_id": "tblKie7gLeHdp3PO",
+                            "text": "ISCSLP",
+                            "text_arr": [
+                                "ISCSLP"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "会议成果": [
+                        {
+                            "record_ids": [
+                                "recnC5GRdb"
+                            ],
+                            "table_id": "tbl0i3cUUApY0ugH",
+                            "text": "AdaVITS: Tiny VITS for Low Computing Resource Speaker Adaptation",
+                            "text_arr": [
+                                "AdaVITS: Tiny VITS for Low Computing Resource Speaker Adaptation"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "会议简称": [
+                        {
+                            "text": "ISCSLP",
+                            "type": "text"
+                        }
+                    ],
+                    "作者列表": "Kun Song, Heyang Xue, Xinsheng Wang, Jian Cong, Yongmao Zhang, Lei Xie, Bing Yang, Xiong Zhang, Dan Su",
+                    "创建人": {
+                        "email": "",
+                        "en_name": "魏梦奇",
+                        "id": "ou_26a8408e8507f18aefdc4f6fe7a24ff9",
+                        "name": "魏梦奇"
+                    },
+                    "合作单位": [
+                        {
+                            "record_ids": [
+                                "recv9tmTFiHHi8"
+                            ],
+                            "table_id": "tbl1v4RWCkuyfbcN",
+                            "text": "腾讯",
+                            "text_arr": [
+                                "腾讯"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "投稿版": [
+                        {
+                            "file_token": "Wo2ebBrR3oes4NxSidZc04FxnUh",
+                            "name": "2206.00208v3.pdf",
+                            "size": 301107,
+                            "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=Wo2ebBrR3oes4NxSidZc04FxnUh",
+                            "type": "application/pdf",
+                            "url": "https://open.feishu.cn/open-apis/drive/v1/medias/Wo2ebBrR3oes4NxSidZc04FxnUh/download"
+                        }
+                    ],
+                    "是否中稿": "是",
+                    "论文名称": "AdaVITS: Tiny VITS for Low Computing Resource Speaker Adaptation",
+                    "通讯作者": "Lei Xie"
+                },
+                "id": "recNdHjeDH",
+                "record_id": "recNdHjeDH"
+            },
+            {
+                "fields": {
+                    " EI 检索号": "20243016742314",
+                    "CR版": [
+                        {
+                            "file_token": "DO1YbXTDRojD8hxhA3KcCl6ynsd",
+                            "name": "Whisper-SV_Adapting_Whisper_for_low-data-resource_speaker_verification.pdf",
+                            "size": 2974660,
+                            "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=DO1YbXTDRojD8hxhA3KcCl6ynsd",
+                            "type": "application/pdf",
+                            "url": "https://open.feishu.cn/open-apis/drive/v1/medias/DO1YbXTDRojD8hxhA3KcCl6ynsd/download"
+                        }
+                    ],
+                    "DOI": "10.1016/J.SPECOM.2024.103103",
+                    "SCI 检索号": "WOS:001276412700001",
+                    "公众号链接": "https://mp.weixin.qq.com/s/7BojWO0LY6YJLXtsRxo-RA",
+                    "创建人": {
+                        "email": "",
+                        "en_name": "资政",
+                        "id": "ou_a7479cee00905e085ccc66a49ae5af0e",
+                        "name": "资政"
+                    },
+                    "卷号": "163",
+                    "投稿信息": [
+                        {
+                            "record_ids": [
+                                "recucQjkbo"
+                            ],
+                            "table_id": "tblcsuI4mEeUhy76",
+                            "text": "Whisper-SV: Adapting Whisper for low-data-resource speaker verification",
+                            "text_arr": [
+                                "Whisper-SV: Adapting Whisper for low-data-resource speaker verification"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "期刊名称": [
+                        {
+                            "text": "Speech Communication",
+                            "type": "text"
+                        }
+                    ],
+                    "论文avxiv链接": "https://arxiv.org/abs/2407.10048",
+                    "论文名称": [
+                        {
+                            "text": "Whisper-SV: Adapting Whisper for low-data-resource speaker verification",
+                            "type": "text"
+                        }
+                    ],
+                    "页码": "103103"
+                },
+                "id": "recTXkzmEY",
+                "record_id": "recTXkzmEY"
+            },
+            {
+                "fields": {
+                    "CCF评级": [
+                        {
+                            "text": "CCF-B",
+                            "type": "text"
+                        }
+                    ],
+                    "SCI分区": [
+                        {
+                            "text": "三区",
+                            "type": "text"
+                        }
+                    ],
+                    "作者列表": "Li Zhang, Ning Jiang, Qing Wang, Yue Li, Quan Lu, Lei Xie",
+                    "合作单位": [
+                        {
+                            "record_ids": [
+                                "recvb0Swhq0Tkr"
+                            ],
+                            "table_id": "tbl1v4RWCkuyfbcN",
+                            "text": "马上消费",
+                            "text_arr": [
+                                "马上消费"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "投稿版": [
+                        {
+                            "file_token": "JqLebnXAhoviZPxnR7Pcp0pvnnd",
+                            "name": "Whisper-SV_Adapting_Whisper_for_low-data-resource_speaker_verification.pdf",
+                            "size": 2974660,
+                            "tmp_url": "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=JqLebnXAhoviZPxnR7Pcp0pvnnd",
+                            "type": "application/pdf",
+                            "url": "https://open.feishu.cn/open-apis/drive/v1/medias/JqLebnXAhoviZPxnR7Pcp0pvnnd/download"
+                        }
+                    ],
+                    "时间": 1704038400000,
+                    "是否中稿": "是",
+                    "期刊全称": [
+                        {
+                            "text": "Speech Communication",
+                            "type": "text"
+                        }
+                    ],
+                    "期刊名称": [
+                        {
+                            "record_ids": [
+                                "recv9ti8Io9123"
+                            ],
+                            "table_id": "tbl1yXp9LUhjs1Ou",
+                            "text": "Speech Communication",
+                            "text_arr": [
+                                "Speech Communication"
+                            ],
+                            "type": "text"
+                        }
+                    ],
+                    "论文名称": "Whisper-SV: Adapting Whisper for low-data-resource speaker verification",
+                    "通讯作者": "Lei Xie"
+                },
+                "id": "recucQjkbo",
+                "record_id": "recucQjkbo"
+            }
+        ],
+        "total": 4
+    },
+    "msg": "success"
+}
