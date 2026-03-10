@@ -77,6 +77,10 @@ python main.py
 - `ieee`
 - `acm`
 - `nature`
+- `apa`
+- `mla`
+- `chicago`
+
 
 说明：
 

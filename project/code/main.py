@@ -5,6 +5,8 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import threading
+import time
 from typing import Dict, Any
 import requests
 
@@ -16,10 +18,14 @@ REPO_DIR = Path(__file__).resolve().parents[2]
 PIPELINE_DIR = REPO_DIR / "get_paper_records" / "python"
 FILE_OUTPUT_DIR = REPO_DIR / "get_paper_records" / "file_output"
 AWARDS_DIR = REPO_DIR / "get_paper_records" / "awards"
-PIPELINE_TIMEOUT_SECONDS = 900
+PIPELINE_TIMEOUT_SECONDS = 60000
+PROGRESS_NOTIFY_INTERVAL_SECONDS = 60
 
 VALID_TABLE_NAMES = ["会议投稿", "会议成果", "期刊投稿", "期刊成果", "竞赛汇总"]
 VALID_STYLES = ["ieee", "acm", "apa", "mla", "chicago", "nature"]
+MESSAGE_DEDUP_TTL_SECONDS = 24 * 60 * 60
+processed_message_ids: dict[str, float] = {}
+processed_message_ids_lock = threading.Lock()
 
 
 def build_subprocess_env() -> dict[str, str]:
@@ -46,6 +52,27 @@ def build_subprocess_env() -> dict[str, str]:
     env["PATH"] = os.pathsep.join(path_entries)
     env["PYTHONIOENCODING"] = "utf-8"
     return env
+
+
+def mark_message_if_new(message_id: str) -> bool:
+    """为消息做幂等去重。
+
+    飞书文档说明接收消息事件可能会重复推送，因此这里使用 message_id
+    做去重；同一 message_id 只处理一次。
+    """
+    now = time.time()
+    expired_before = now - MESSAGE_DEDUP_TTL_SECONDS
+
+    with processed_message_ids_lock:
+        expired_ids = [mid for mid, ts in processed_message_ids.items() if ts < expired_before]
+        for mid in expired_ids:
+            processed_message_ids.pop(mid, None)
+
+        if message_id in processed_message_ids:
+            return False
+
+        processed_message_ids[message_id] = now
+        return True
 
 def get_tenant_access_token(app_id: str, app_secret: str) -> tuple[str, Exception]:
     """获取 tenant_access_token
@@ -247,6 +274,7 @@ def parse_user_request(parameter: str) -> tuple[str, str]:
     if style_match:
         style_name = style_match.group(1).lower()
     else:
+        # 大写也支持
         lowered = text.lower()
         for candidate in VALID_STYLES:
             if candidate in lowered:
@@ -302,6 +330,59 @@ def run_export_pipeline(table_name: str, style_name: str) -> list[tuple[Path, st
 
     return files
 
+
+def send_progress_updates(
+    tenant_access_token: str,
+    chat_id: str,
+    table_name: str,
+    style_name: str,
+    stop_event: threading.Event,
+) -> None:
+    """在后台任务执行期间定期发送进度提示。"""
+    while not stop_event.wait(PROGRESS_NOTIFY_INTERVAL_SECONDS):
+        try:
+            if table_name == "竞赛汇总":
+                text = f"任务仍在处理中：{table_name}，请稍候"
+            else:
+                text = f"任务仍在处理中：{table_name}，引用样式 {style_name}，等待时间约为5-10分钟，请稍候"
+            send_text_message(tenant_access_token, chat_id, text)
+        except Exception as e:
+            print(f"Error sending progress notification: {e}", file=sys.stderr)
+
+
+def process_export_request(tenant_access_token: str, chat_id: str, table_name: str, style_name: str) -> None:
+    """在后台线程中执行导出请求并回传文件。"""
+    progress_stop_event = threading.Event()
+    progress_worker = threading.Thread(
+        target=send_progress_updates,
+        args=(tenant_access_token, chat_id, table_name, style_name, progress_stop_event),
+        daemon=True,
+        name=f"progress-{chat_id}",
+    )
+    progress_worker.start()
+
+    try:
+        generated_files = run_export_pipeline(table_name, style_name)
+
+        for file_path, file_type in generated_files:
+            file_key = upload_file_to_feishu(tenant_access_token, str(file_path), file_path.name, file_type)
+            send_file_message(tenant_access_token, chat_id, "chat_id", file_key)
+
+        send_text_message(tenant_access_token, chat_id, "处理完成，请查收文件")
+
+        print(f"Successfully sent files to chat: {chat_id}")
+
+    except Exception as e:
+        print(f"Error running pipeline or sending files: {e}", file=sys.stderr)
+        try:
+            tenant_access_token, err = get_tenant_access_token(app_id, app_secret)
+            if not err:
+                send_error_message(tenant_access_token, chat_id, "导出失败，请检查表名或样式，稍后重试")
+        except Exception as notify_err:
+            print(f"Error sending failure notification: {notify_err}", file=sys.stderr)
+    finally:
+        progress_stop_event.set()
+
 def do_p2_im_message_receive_v1(data: lark.im.v1.P2ImMessageReceiveV1) -> None:
     """处理接收消息事件
     
@@ -321,6 +402,15 @@ def do_p2_im_message_receive_v1(data: lark.im.v1.P2ImMessageReceiveV1) -> None:
         if message.message_type != "text":
             print(f"Ignore non-text message type: {message.message_type}")
             return
+
+        message_id = message.message_id
+        if not message_id:
+            print("No message_id in event", file=sys.stderr)
+            return
+
+        if not mark_message_if_new(message_id):
+            print(f"Skip duplicated message: {message_id}")
+            return
             
         # 解析消息内容
         content = json.loads(message.content)
@@ -337,18 +427,16 @@ def do_p2_im_message_receive_v1(data: lark.im.v1.P2ImMessageReceiveV1) -> None:
 
         sender_open_id = getattr(sender_id, "open_id", "unknown_open_id")
         print(f"Received message from {sender_open_id}: {text}")
-        
-        # 获取 tenant_access_token
-        tenant_access_token, err = get_tenant_access_token(app_id, app_secret)
-        if err:
-            print(f"Error getting tenant_access_token: {err}", file=sys.stderr)
-            return
-            
+
         # 解析用户请求并执行成果导出 pipeline
         try:
             table_name, style_name = parse_user_request(text)
         except Exception as e:
             print(f"Error parsing request: {e}", file=sys.stderr)
+            tenant_access_token, err = get_tenant_access_token(app_id, app_secret)
+            if err:
+                print(f"Error getting tenant_access_token: {err}", file=sys.stderr)
+                return
             send_error_message(
                 tenant_access_token,
                 chat_id,
@@ -356,23 +444,21 @@ def do_p2_im_message_receive_v1(data: lark.im.v1.P2ImMessageReceiveV1) -> None:
             )
             return
 
-        try:
-            if table_name == "竞赛汇总":
-                send_text_message(tenant_access_token, chat_id, f"开始处理：{table_name}")
-            else:
-                send_text_message(tenant_access_token, chat_id, f"开始处理：{table_name}，引用样式：{style_name}")
+        tenant_access_token, err = get_tenant_access_token(app_id, app_secret)
+        if err:
+            print(f"Error getting tenant_access_token: {err}", file=sys.stderr)
+            return
 
-            generated_files = run_export_pipeline(table_name, style_name)
+        send_text_message(tenant_access_token, chat_id, "任务已接收，正在后台处理，引用格式导出任务等待时间可能较久，请稍候...")
 
-            for file_path, file_type in generated_files:
-                file_key = upload_file_to_feishu(tenant_access_token, str(file_path), file_path.name, file_type)
-                send_file_message(tenant_access_token, chat_id, "chat_id", file_key)
-
-            print(f"Successfully sent files to chat: {chat_id}")
-
-        except Exception as e:
-            print(f"Error running pipeline or sending files: {e}", file=sys.stderr)
-            send_error_message(tenant_access_token, chat_id, "导出失败，请检查表名或样式，稍后重试")
+        worker = threading.Thread(
+            target=process_export_request,
+            args=(tenant_access_token, chat_id, table_name, style_name),
+            daemon=True,
+            name=f"export-{message_id}",
+        )
+        worker.start()
+        print(f"Started background worker {worker.name} for message: {message_id}")
                 
     except Exception as e:
         print(f"Error processing message event: {e}", file=sys.stderr)

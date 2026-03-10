@@ -18,6 +18,7 @@ def build_issued(year):
     return None
 
 
+# 对于缺失或格式错误的年份字段，直接删除，避免生成无效的 issued 字段导致后续处理出错。
 def sanitize_csl_entry(csl):
     issued = csl.get("issued")
     if not issued:
@@ -33,6 +34,19 @@ def sanitize_csl_entry(csl):
         csl.pop("issued", None)
 
     return csl
+
+
+# 判断是否需要调用 Crossref 补全，仅在关键字段缺失时才补全，避免每条记录都联网查询。
+def needs_crossref_enrichment(csl):
+    if not csl.get("DOI"):
+        return True
+    if not csl.get("author"):
+        return True
+    if not csl.get("container-title"):
+        return True
+    if not csl.get("issued"):
+        return True
+    return False
 
 
 
@@ -264,14 +278,15 @@ def convert(input_file):
         if issued:
             csl["issued"] = issued
 
-        # 再调用 Crossref 自动补全
-        crossref_meta = query_crossref(
-            doi=DOI if DOI else None,
-            title=title if not DOI else None
-        )
+        # 仅在关键字段缺失时才调用 Crossref 补全，避免每条记录都联网查询。
+        if needs_crossref_enrichment(csl):
+            crossref_meta = query_crossref(
+                doi=DOI if DOI else None,
+                title=title if not DOI else None
+            )
 
-        if crossref_meta:
-            csl = enrich_from_crossref(csl, crossref_meta)
+            if crossref_meta:
+                csl = enrich_from_crossref(csl, crossref_meta)
 
         csl = sanitize_csl_entry(csl)
         output.append(csl)
