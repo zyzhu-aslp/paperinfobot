@@ -7,7 +7,7 @@ import subprocess
 import sys
 import threading
 import time
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import requests
 
 
@@ -19,13 +19,76 @@ PIPELINE_DIR = REPO_DIR / "get_paper_records" / "python"
 FILE_OUTPUT_DIR = REPO_DIR / "get_paper_records" / "file_output"
 AWARDS_DIR = REPO_DIR / "get_paper_records" / "awards"
 PIPELINE_TIMEOUT_SECONDS = 60000
-PROGRESS_NOTIFY_INTERVAL_SECONDS = 60
+PROGRESS_NOTIFY_INTERVAL_SECONDS = 120
 
 VALID_TABLE_NAMES = ["会议投稿", "会议成果", "期刊投稿", "期刊成果", "竞赛汇总"]
 VALID_STYLES = ["ieee", "acm", "apa", "mla", "chicago", "nature"]
 MESSAGE_DEDUP_TTL_SECONDS = 24 * 60 * 60
 processed_message_ids: dict[str, float] = {}
 processed_message_ids_lock = threading.Lock()
+
+
+class ExportProgressState:
+    """在后台导出时维护当前阶段，供定时进度通知读取。"""
+
+    def __init__(self, table_name: str, style_name: str):
+        self.table_name = table_name
+        self.style_name = style_name
+        self._current_stage = "正在准备任务"
+        self._last_output_line = ""
+        self._lock = threading.Lock()
+
+    def update_stage(self, stage: str) -> None:
+        with self._lock:
+            self._current_stage = stage
+
+    def update_from_output(self, output_line: str) -> None:
+        line = output_line.strip()
+        if not line:
+            return
+
+        stage = detect_export_stage(line)
+        with self._lock:
+            self._last_output_line = line
+            if stage:
+                self._current_stage = stage
+
+    def get_progress_message(self) -> str:
+        with self._lock:
+            current_stage = self._current_stage
+
+        if self.table_name == "竞赛汇总":
+            return f"任务仍在处理中：{self.table_name}，{current_stage}，请稍候"
+
+        return (
+            f"任务仍在处理中：{self.table_name}，引用样式 {self.style_name}，"
+            f"{current_stage}，请稍候"
+        )
+
+
+def detect_export_stage(output_line: str) -> Optional[str]:
+    """根据 pipeline 的实时输出识别当前阶段。"""
+    lower_line = output_line.lower()
+
+    if "[1/4] 拉取表格数据" in output_line or "[1/2] 拉取表格数据" in output_line:
+        return "正在拉取数据"
+    if "[2/4] 处理投稿类时间字段" in output_line:
+        return "正在处理时间字段"
+    if "[3/4] 生成 csl json" in lower_line:
+        return "正在生成 CSL"
+    if "sanitizing csl json" in lower_line:
+        return "正在校验 CSL 数据"
+    if "generating export markdown" in lower_line:
+        return "正在生成导出文稿"
+    if "generating pdf" in lower_line:
+        return "正在导出 PDF"
+    if "generating word" in lower_line:
+        return "正在导出 DOCX"
+    if "[2/2] 导出竞赛中英文结果" in output_line:
+        return "正在导出竞赛结果"
+    if "done." in lower_line or "流程完成" in output_line:
+        return "正在整理导出结果"
+    return None
 
 
 def build_subprocess_env() -> dict[str, str]:
@@ -284,32 +347,63 @@ def parse_user_request(parameter: str) -> tuple[str, str]:
     return table_name, style_name
 
 
-def run_export_pipeline(table_name: str, style_name: str) -> list[tuple[Path, str]]:
+def run_export_pipeline(
+    table_name: str,
+    style_name: str,
+    progress_state: ExportProgressState,
+) -> list[tuple[Path, str]]:
     """执行成果导出 pipeline，并返回要发送的文件列表。"""
     command = ["bash", "pipeline.sh", table_name, style_name]
     print(f"Running pipeline command: {command} in {PIPELINE_DIR}")
 
-    result = subprocess.run(
+    process = subprocess.Popen(
         command,
         cwd=str(PIPELINE_DIR),
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         text=True,
         encoding="utf-8",
         env=build_subprocess_env(),
-        timeout=PIPELINE_TIMEOUT_SECONDS,
-        check=False,
+        bufsize=1,
     )
 
-    if result.stdout:
-        print(f"Pipeline stdout:\n{result.stdout}")
-    if result.stderr:
-        print(f"Pipeline stderr:\n{result.stderr}", file=sys.stderr)
+    output_lines: list[str] = []
 
-    if result.returncode != 0:
+    def consume_output() -> None:
+        if process.stdout is None:
+            return
+
+        for raw_line in process.stdout:
+            output_lines.append(raw_line)
+            line = raw_line.rstrip()
+            if line:
+                print(f"Pipeline output: {line}")
+                progress_state.update_from_output(line)
+
+    output_thread = threading.Thread(
+        target=consume_output,
+        daemon=True,
+        name=f"pipeline-output-{table_name}",
+    )
+    output_thread.start()
+
+    try:
+        return_code = process.wait(timeout=PIPELINE_TIMEOUT_SECONDS)
+    except subprocess.TimeoutExpired as exc:
+        process.kill()
+        output_thread.join()
+        raise TimeoutError(f"pipeline 执行超时，超过 {PIPELINE_TIMEOUT_SECONDS} 秒") from exc
+
+    output_thread.join()
+    combined_output = "".join(output_lines)
+
+    if process.stdout is not None:
+        process.stdout.close()
+
+    if return_code != 0:
         raise RuntimeError(
-            f"pipeline 执行失败，退出码: {result.returncode}\n"
-            f"stdout:\n{result.stdout}\n"
-            f"stderr:\n{result.stderr}"
+            f"pipeline 执行失败，退出码: {return_code}\n"
+            f"output:\n{combined_output}"
         )
 
     if table_name == "竞赛汇总":
@@ -334,35 +428,33 @@ def run_export_pipeline(table_name: str, style_name: str) -> list[tuple[Path, st
 def send_progress_updates(
     tenant_access_token: str,
     chat_id: str,
-    table_name: str,
-    style_name: str,
+    progress_state: ExportProgressState,
     stop_event: threading.Event,
 ) -> None:
     """在后台任务执行期间定期发送进度提示。"""
     while not stop_event.wait(PROGRESS_NOTIFY_INTERVAL_SECONDS):
         try:
-            if table_name == "竞赛汇总":
-                text = f"任务仍在处理中：{table_name}，请稍候"
-            else:
-                text = f"任务仍在处理中：{table_name}，引用样式 {style_name}，等待时间约为5-10分钟，请稍候"
-            send_text_message(tenant_access_token, chat_id, text)
+            send_text_message(tenant_access_token, chat_id, progress_state.get_progress_message())
         except Exception as e:
             print(f"Error sending progress notification: {e}", file=sys.stderr)
 
 
 def process_export_request(tenant_access_token: str, chat_id: str, table_name: str, style_name: str) -> None:
     """在后台线程中执行导出请求并回传文件。"""
+    progress_state = ExportProgressState(table_name, style_name)
     progress_stop_event = threading.Event()
     progress_worker = threading.Thread(
         target=send_progress_updates,
-        args=(tenant_access_token, chat_id, table_name, style_name, progress_stop_event),
+        args=(tenant_access_token, chat_id, progress_state, progress_stop_event),
         daemon=True,
         name=f"progress-{chat_id}",
     )
     progress_worker.start()
 
     try:
-        generated_files = run_export_pipeline(table_name, style_name)
+        generated_files = run_export_pipeline(table_name, style_name, progress_state)
+
+        progress_state.update_stage("正在上传导出文件")
 
         for file_path, file_type in generated_files:
             file_key = upload_file_to_feishu(tenant_access_token, str(file_path), file_path.name, file_type)
@@ -449,7 +541,14 @@ def do_p2_im_message_receive_v1(data: lark.im.v1.P2ImMessageReceiveV1) -> None:
             print(f"Error getting tenant_access_token: {err}", file=sys.stderr)
             return
 
-        send_text_message(tenant_access_token, chat_id, "任务已接收，正在后台处理，引用格式导出任务等待时间可能较久，请稍候...")
+        if table_name == "竞赛汇总":
+            accepted_text = "任务已接收，正在后台处理，当前阶段：正在拉取数据"
+        else:
+            accepted_text = (
+                f"任务已接收，正在后台处理，引用样式 {style_name}，"
+                "当前阶段：正在拉取数据"
+            )
+        send_text_message(tenant_access_token, chat_id, accepted_text)
 
         worker = threading.Thread(
             target=process_export_request,
