@@ -99,9 +99,9 @@ def extract_year(fields: dict) -> str:
 
 def main():
     parser = argparse.ArgumentParser(description="Convert JSON records to BibTeX format.")
-    parser.add_argument("-input_json", required=True, help="Path to the input JSON file.")
-    parser.add_argument("-output_bib", required=True, help="Path to the output BibTeX file.")
-    parser.add_argument("--type", choices=['journal', 'conference'], required=True, help="Type of the publication.")
+    parser.add_argument("-input_json", default="../record/会议成果_mp_records.json", help="Path to the input JSON file.")
+    parser.add_argument("-output_bib", default="../bibtex/会议成果.bib", help="Path to the output BibTeX file.")
+    parser.add_argument("--type", choices=['journal', 'conference'], default='conference', help="Type of the publication.")
     args = parser.parse_args()
 
     with open(args.input_json, "r", encoding="utf-8") as f:

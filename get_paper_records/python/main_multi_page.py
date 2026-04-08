@@ -98,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--table_name",
         "-tn",
-        default="会议投稿",
+        default="会议成果",
         choices=["会议投稿", "会议成果", "期刊投稿", "期刊成果", "竞赛汇总"],
         help="表格名称"
     )
