@@ -41,14 +41,14 @@ ensure_publication_dependencies() {
 
 # 第一步：从飞书多维表格抓取数据，生成 ../record/<table_name>_mp_records.json。
 run_fetch() {
-  echo "[1/4] 拉取表格数据: $table_name"
+  echo "[1/5] 拉取表格数据: $table_name"
   python main_multi_page.py --table_name "$table_name"
 }
 
 # 投稿类记录中的时间字段需要先标准化，成果类可跳过。
 run_time_conversion_if_needed() {
   if [ "$table_name" = "会议投稿" ] || [ "$table_name" = "期刊投稿" ]; then
-    echo "[2/4] 处理投稿类时间字段"
+    echo "[2/5] 处理投稿类时间字段"
     python time_format_change.py -input_json "$record_json"
   fi
 }
@@ -59,10 +59,10 @@ run_publication_export() {
 
   ensure_publication_dependencies
 
-  echo "[3/4] 生成 CSL JSON"
+  echo "[3/5] 生成 CSL JSON"
   python csl_json.py -i "$record_json"
 
-  echo "[4/4] 导出 PDF 和 DOCX，样式: $style_name"
+  echo "[4/5] 导出 PDF 和 DOCX，样式: $style_name"
   bash csljson2pdfdocx.sh "$csl_json_name" "$style_name"
 }
 
@@ -76,6 +76,29 @@ run_challenge_export() {
     -input_json "$record_json" \
     -output_cn "$awards_dir/awards_cn.txt" \
     -output_en "$awards_dir/awards_en.txt"
+}
+
+# 导出为 BibTeX 格式
+run_bibtex_export() {
+  local bibtex_dir="../bibtex"
+  mkdir -p "$bibtex_dir"
+  local output_bib="$bibtex_dir/${table_name}.bib"
+  local type
+
+  if [[ "$table_name" == "会议成果" ]]; then
+    type="conference"
+  elif [[ "$table_name" == "期刊成果" ]]; then
+    type="journal"
+  else
+    # 对于不支持的类型，静默返回
+    return
+  fi
+
+  echo "[5/5] 导出 BibTeX 文件..."
+  python json_to_bibtex.py \
+    --type "$type" \
+    -input_json "$record_json" \
+    -output_bib "$output_bib"
 }
 
 # 根据 table_name 选择对应流程入口。
@@ -93,6 +116,7 @@ main() {
     "会议成果"|"期刊成果")
       run_fetch
       run_publication_export
+      run_bibtex_export
       ;;
     "竞赛汇总")
       run_fetch

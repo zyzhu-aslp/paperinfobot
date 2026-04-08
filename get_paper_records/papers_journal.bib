@@ -1,0 +1,744 @@
+@inproceedings{Zhu2025vectok,
+  title        = {Vec-Tok Speech: speech vectorization and tokenization for neural speech generation},
+  author       = {Zhu, Xinfa and Lv, Yuanjun and Lei, Yi and Li, Tao and He, Wendi and Zhou, Hongbin and Lu, Heng and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2025},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/10906431?arnumber=10906431},
+  demo         = {https://vectokdemo.github.io/VecTok/},
+  arxiv        = {2310.07246},
+  abstract     = {Language models (LMs) have recently flourished in natural language processing and computer vision, generating high-fidelity texts or images in various tasks. In contrast, the current speech generative models are still struggling regarding speech quality and task generalization. This paper presents Vec-Tok Speech, an extensible framework that resembles multiple speech generation tasks, generating expressive and high-fidelity speech. Specifically, we propose a novel speech codec based on speech vectors and semantic tokens. Speech vectors contain acoustic details contributing to high-fidelity speech reconstruction, while semantic tokens focus on the linguistic content of speech, facilitating language modeling. Based on the proposed speech codec, Vec-Tok Speech leverages an LM to undertake the core of speech generation. Moreover, Byte-Pair Encoding (BPE) is introduced to reduce the token length and bit rate for lower exposure bias and longer context coverage, improving the performance of LMs. Vec-Tok Speech can be used for intra- and cross-lingual zero-shot voice conversion (VC), zero-shot speaking style transfer text-to-speech (TTS), speech-to-speech translation (S2ST), speech denoising, and speaker de-identification and anonymization. Experiments show that Vec-Tok Speech, built on 50k hours of speech, performs better than other SOTA models. Code will be available at https://github.com/BakerBunker/VecTok .},
+  selected     = {true}
+}
+
+@inproceedings{Shao2025dqdatavec,
+  title        = {DQ-Data2vec: Decoupling Quantization for Multilingual Speech Recognition},
+  author       = {Shao, Qijie and Dong, Linhao and Wei, Kun and Sun, Sining and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2025},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/10937108?arnumber=10937108},
+  arxiv        = {2501.13497},
+  abstract     = {Data2vec is a self-supervised learning (SSL) approach that employs a teacher-student architecture for contextual representation learning via masked prediction, demonstrating remarkable performance in monolingual ASR. Previous studies have revealed that data2vec's shallow layers capture speaker and language information, middle layers encode phoneme and word features, while deep layers are responsible for reconstruction. Language and phoneme features are crucial for multilingual ASR. However, data2vec's masked representation generation relies on multi-layer averaging, inevitably coupling these features. To address this limitation, we propose a decoupling quantization based data2vec (DQ-Data2vec) for multilingual ASR, which includes a data2vec backbone and two improved online K-means quantizers. Our core idea is using the K-means quantizer with specified cluster numbers to decouple language and phoneme information for masked prediction. Specifically, in the language quantization, considering that the number of languages is significantly different from other irrelevant features (e.g., speakers), we assign the cluster number to match the number of languages, explicitly decoupling shallow layers' language-related information from irrelevant features. This strategy is also applied to decoupling middle layers' phoneme and word features. In a self-supervised scenario, experiments on the CommonVoice dataset demonstrate that DQ-Data2vec achieves a relative reduction of 9.51% in phoneme error rate (PER) and 11.58% in word error rate (WER) compared to data2vec and UniData2vec. Moreover, in a weakly-supervised scenario incorporating language labels and high-resource language text labels, the relative reduction is 18.09% and 1.55%, respectively.},
+  selected     = {true}
+}
+
+@inproceedings{Yao2025musa,
+  title        = {MUSA: Multi-lingual Speaker Anonymization via Serial Disentanglement},
+  author       = {Yao, Jixun and Wang, Qing and Guo, Pengcheng and Ning, Ziqian and Yang, Yuguang and Pan, Yu and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2025},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/10945405?arnumber=10945405},
+  arxiv        = {2407.11629},
+  abstract     = {Speaker anonymization is an effective privacy protection solution designed to conceal the speaker's identity while preserving the linguistic content and para-linguistic information of the original speech. While most prior studies focus solely on a single language, an ideal speaker anonymization system should be capable of handling multiple languages. This paper proposes MUSA, a Multi-lingual Speaker Anonymization approach that employs a serial disentanglement strategy to perform a step-by-step disentanglement from a global time-invariant representation to a temporal time-variant representation. By utilizing semantic distillation and self-supervised speaker distillation, the serial disentanglement strategy can avoid strong inductive biases and exhibit superior generalization performance across different languages. Meanwhile, we propose a straightforward anonymization strategy that employs empty embedding with zero values to simulate the speaker identity concealment process, eliminating the need for conversion to a pseudo-speaker identity and thereby reducing the complexity of speaker anonymization process. Experimental results on VoicePrivacy official datasets and multi-lingual datasets demonstrate that MUSA can effectively protect speaker privacy while preserving linguistic content and para-linguistic information.},
+  selected     = {true}
+}
+
+@inproceedings{Mu2025mixture,
+  title        = {Mixture of LoRA Experts with Multi-Modal and Multi-Granularity LLM Generative Error Correction for Accented Speech Recognition},
+  author       = {Mu, Bingshen and Wei, Kun and Guo, Pengcheng and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2025},
+  abbr         = {TASLP},
+  arxiv        = {2507.09116},
+  abstract     = {Despite improvements in automatic speech recognition, performance drops with accented speech. Generative error correction (GER) leverages the linguistic knowledge of large language models (LLMs), outperforming typical language model methods. However, it lacks specificity in accented speech scenarios. Accents represent deviations from standard pronunciation, making multi-granularity pronunciation and semantic information essential for accented speech recognition. Moreover, accents exhibit considerable diversity, with each accent possessing distinct characteristics. In this study, we leverage GER to improve transcription accuracy by addressing the two primary features. We propose the multi-modal GER, which integrates pronunciation information from the speech modality, and the multi-granularity GER, which incorporates fine-grained phoneme-level pronunciation information. These methods enable the LLM to utilize the pronunciation information of accented speech and the semantic information from word-level hypotheses for accurate transcription predictions through low-rank adaptation (LoRA) fine-tuning. We employ a three-stage strategy to train separate multi-modal GER models for each accent to obtain mono-accent LoRA experts. By adopting our proposed HDMoLE method, which incorporates hierarchical routing and dynamic thresholds within the mixture of LoRA experts, we effectively merge mono-accent LoRA experts within a single multi-modal GER to overcome accent diversity challenges. Furthermore, multi-granularity GER leverages N-best word-level and phoneme-level hypotheses from the HDMoLE model to predict final transcriptions. Experiments on a multi-accent English dataset show that our methods reduce word error rate by 67.35% compared to the baseline vanilla Whisper-large-v3 model.},
+  selected     = {true}
+}
+
+@inproceedings{Zhao2025steering,
+  title        = {Steering Language Model to Stable Speech Emotion Recognition via Contextual Perception and Chain of Thought},
+  author       = {Zhao, Zhixian and Zhu, Xinfa and Wang, Xinsheng and Wang, Shuiyuan and Geng, Xuelong and Tian, Wenjie and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2025},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/11316371},
+  arxiv        = {2502.18186},
+  selected     = {true}
+}
+
+@inproceedings{Yao2025fpo,
+  title        = {FPO: Fine-grained Preference Optimization Improves Zero-shot Text-to-Speech},
+  author       = {Yao, Jixun and Yang, Yuguang and Pan, Yu and Feng, Yuan and Ning, Ziqian and Ye, Jianhao and Zhou, Hongbin and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2025},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/11316389},
+  arxiv        = {2502.02950},
+  selected     = {true}
+}
+
+@inproceedings{Zhang2024whispersv,
+  title        = {Whisper-SV: Adapting Whisper for low-data-resource speaker verification},
+  author       = {Zhang, Li and Jiang, Ning and Wang, Qing and Li, Yue and Lu, Quan and Xie, Lei},
+  journal      = {Speech Communication},
+  year         = {2024},
+  abbr         = {Speech Communication},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S016763932400075X},
+  arxiv        = {2407.10048},
+  selected     = {true}
+}
+
+@inproceedings{Mu2024mmger,
+  title        = {MMGER: Multi-modal and Multi-granularity Generative Error Correction with LLM for Joint Accent and Speech Recognition},
+  author       = {Mu, Bingshen and Li, Yangze and Shao, Qijie and Wei, Kun and Wan, Xucheng and Zheng, Naijun and Zhou, Huan and Xie, Lei},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2024},
+  abbr         = {SPL},
+  pdf          = {https://ieeexplore.ieee.org/document/10607842},
+  arxiv        = {2405.03152},
+  selected     = {true}
+}
+
+@inproceedings{Han2024distildccrn,
+  title        = {Distil-DCCRN: A Small-footprint DCCRN Leveraging Feature-based Knowledge Distillation in Speech Enhancement},
+  author       = {Han, Runduo and Xu, Weiming and Zhang, Zihan and Liu, Mingshuai and Xie, Lei},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2024},
+  abbr         = {SPL},
+  pdf          = {https://ieeexplore.ieee.org/document/10632589},
+  demo         = {https://rdhan3.github.io/Distil_DCCRN_demo/},
+  arxiv        = {2408.04267},
+  abstract     = {The deep complex convolution recurrent network (DCCRN) achieves excellent speech enhancement performance by utilizing the audio spectrum's complex features. However, it has a large number of model parameters. We propose a smaller model, Distil-DCCRN, which has only 30% of the parameters compared to the DCCRN. To ensure that the performance of Distil-DCCRN matches that of the DCCRN, we employ the knowledge distillation (KD) method to use a larger teacher model to help train a smaller student model. We design a knowledge distillation (KD) method, integrating attention transfer and Kullback-Leibler divergence (AT-KL) to train the student model Distil-DCCRN. Additionally, we use a model with better performance and a more complicated structure, Uformer, as the teacher model. Unlike previous KD approaches that mainly focus on model outputs, our method also leverages the intermediate features from the models' middle layers, facilitating rich knowledge transfer across different structured models despite variations in layer configurations and discrepancies in the channel and time dimensions of intermediate features. Employing our AT-KL approach, Distil-DCCRN outperforms DCCRN as well as several other competitive models in both PESQ and SI-SNR metrics on the DNS test set and achieves comparable results to DCCRN in DNSMOS.},
+  selected     = {true}
+}
+
+@inproceedings{Li2024ustyle,
+  title        = {U-Style: Cascading U-nets with Multi-level Speaker and Style Modeling for Zero-Shot Voice Cloning},
+  author       = {Li, Tao and Wang, Zhichao and Zhu, Xinfa and Cong, Jian and Tian, Qiao and Wang, Yuping and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2024},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2024.3453606},
+  demo         = {https://silyfox.github.io/ustyle/},
+  arxiv        = {2310.04004},
+  abstract     = {Zero-shot speaker cloning aims to synthesize speech for any target speaker unseen during TTS system building, given only a single speech reference of the speaker at hand. Although more practical in real applications, the current zero-shot methods still produce speech with undesirable naturalness and speaker similarity. Moreover, endowing the target speaker with arbitrary speaking styles in the zero-shot setup has not been considered. This is because the unique challenge of zero-shot speaker and style cloning is to learn the disentangled speaker and style representations from only short references representing an arbitrary speaker and an arbitrary style. To address this challenge, we propose U-Style, which employs Grad-TTS as the backbone, particularly cascading a speaker-specific encoder and a style-specific encoder between the text encoder and the diffusion decoder. Thus, leveraging signal perturbation, U-Style is explicitly decomposed into speaker- and style-specific modeling parts, achieving better speaker and style disentanglement. To improve unseen speaker and style modeling ability, these two encoders conduct multi-level speaker and style modeling by skip-connected U-nets, incorporating the representation extraction and information reconstruction process. Besides, to improve the naturalness of synthetic speech, we adopt mean-based instance normalization and style adaptive layer normalization in these encoders to perform representation extraction and condition adaptation, respectively. Experiments show that U-Style significantly surpasses the state-of-the-art methods in unseen speaker cloning regarding naturalness and speaker similarity. Notably, U-Style can transfer the style from an unseen source speaker to another unseen target speaker, achieving flexible combinations of desired speaker timbre and style in zero-shot voice cloning.},
+  selected     = {true}
+}
+
+@inproceedings{Wang2024streamvoice,
+  title        = {StreamVoice+: Evolving into End-to-end Streaming Zero-shot Voice Conversion},
+  author       = {Wang, Zhichao and Chen, Yuanzhe and Wang, Xinsheng and Xie, Lei and Wang, Yuping},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2024},
+  abbr         = {SPL},
+  pdf          = {https://ieeexplore.ieee.org/document/10720790},
+  demo         = {https://kerwinchao.github.io/StreamVoice_Plus/},
+  arxiv        = {2408.02178},
+  abstract     = {StreamVoice has recently pushed the boundaries of zero-shot voice conversion (VC) in the streaming domain. It uses a streamable language model (LM) with a context-aware approach to convert semantic features from automatic speech recognition (ASR) into acoustic features with the desired speaker timbre. Despite its innovations, StreamVoice faces challenges due to its dependency on a streaming ASR within a cascaded framework, which complicates system deployment and optimization, affects VC system's design and performance based on the choice of ASR, and struggles with conversion stability when faced with low-quality semantic inputs. To overcome these limitations, we introduce StreamVoice+, an enhanced LM-based end-to-end streaming framework that operates independently of streaming ASR. StreamVoice+ integrates a semantic encoder and a connector with the original StreamVoice framework, now trained using a non-streaming ASR. This model undergoes a two-stage training process: initially, the StreamVoice backbone is pre-trained for voice conversion and the semantic encoder for robust semantic extraction. Subsequently, the system is fine-tuned end-to-end, incorporating a LoRA matrix to activate comprehensive streaming functionality. Furthermore, StreamVoice+ mainly introduces two strategic enhancements to boost conversion quality: a residual compensation mechanism in the connector to ensure effective semantic transmission and a self-refinement strategy that leverages pseudo-parallel speech pairs generated by the conversion backbone to improve speech decoupling. Experiments demonstrate that StreamVoice+ not only achieves higher naturalness and speaker similarity in voice conversion than its predecessor but also provides versatile support for both streaming and non-streaming conversion scenarios.},
+  selected     = {true}
+}
+
+@inproceedings{Guo2024sqwhisper,
+  title        = {SQ-Whisper: Speaker-Querying based Whisper Model for Target-Speaker ASR},
+  author       = {Guo, Pengcheng and Chang, Xuankai and Lv, Hang and Watanabe, Shinji and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2024},
+  abbr         = {TASLP},
+  pdf          = {https://doi.org/10.1109/TASLP.2024.3513835},
+  arxiv        = {2412.05589},
+  abstract     = {Benefiting from massive and diverse data sources, speech foundation models exhibit strong generalization and knowledge transfer capabilities to a wide range of downstream tasks. However, a limitation arises from their exclusive handling of single-speaker speech input, making them ineffective in recognizing multi-speaker overlapped speech, a common occurrence in real-world scenarios. In this study, we delve into the adaptation of speech foundation models to eliminate interfering speakers from overlapping speech and perform target-speaker automatic speech recognition (TS-ASR). Initially, we utilize the Whisper model as the foundation for adaptation and conduct a thorough comparison of its integration with existing target-speaker adaptation techniques. We then propose an innovative model termed Speaker-Querying Whisper (SQ-Whisper), which employs a set number of trainable queries to capture speaker prompts from overlapping speech based on target-speaker enrollment. These prompts serve to steer the model in extracting speaker-specific features and accurately recognizing target-speaker transcriptions. Experimental results demonstrate that our approach effectively adapts the pre-trained speech foundation model to TS-ASR. Compared with the robust TS-HuBERT model, the proposed SQ-Whisper significantly improves performance, yielding up to 15% and 10% relative reductions in word error rates (WERs) on the Libri2Mix and WSJ0-2Mix datasets, respectively. With data augmentation, we establish new state-of-the-art WERs of 14.6% on the Libri2Mix Test set and 4.4% on the WSJ0-2Mix Test set. Furthermore, we evaluate our model on the real-world AMI meeting dataset, which shows consistent improvement over other adaptation methods.},
+  selected     = {true}
+}
+
+@inproceedings{Zhu2024metts,
+  title        = {METTS: Multilingual Emotional Text-to-Speech by Cross-Speaker and Cross-Lingual Emotion Transfer},
+  author       = {Zhu, Xinfa and Lei, Yi and Li, Tao and Zhang, Yongmao and Zhou, Hongbin and Lu, Heng and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2024},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2024.3363444},
+  arxiv        = {2307.15951},
+  abstract     = {Previous multilingual text-to-speech (TTS) approaches have considered leveraging monolingual speaker data to enable cross-lingual speech synthesis. However, such data-efficient approaches have ignored synthesizing emotional aspects of speech due to the challenges of cross-speaker cross-lingual emotion transfer - the heavy entanglement of speaker timbre, emotion, and language factors in the speech signal will make a system produce cross-lingual synthetic speech with an undesired foreign accent and weak emotion expressiveness. This paper proposes the Multilingual Emotional TTS (METTS) model to mitigate these problems, realizing both cross-speaker and cross-lingual emotion transfer. Specifically, METTS takes DelightfulTTS as the backbone model and proposes the following designs. First, to alleviate the foreign accent problem, METTS introduces multi-scale emotion modeling to disentangle speech prosody into coarse-grained and fine-grained scales, producing language-agnostic and language-specific emotion representations, respectively. Second, as a pre-processing step, formant shift-based information perturbation is applied to the reference signal for better disentanglement of speaker timbre in the speech. Third, a vector quantization-based emotion matcher is designed for reference selection, leading to decent naturalness and emotion diversity in cross-lingual synthetic speech. Experiments demonstrate the good design of METTS.},
+  selected     = {true}
+}
+
+@inproceedings{Wei2024conversational,
+  title        = {Conversational Speech Recognition by Learning Audio-textual Cross-modal Contextual Representation},
+  author       = {Wei, Kun and Li, Bei and Lv, Hang and Lu, Quan and Jiang, Ning and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2024},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2024.3389630},
+  arxiv        = {2310.14278},
+  abstract     = {Automatic Speech Recognition (ASR) in conversational settings presents unique challenges, including extracting relevant contextual information from previous conversational turns. Due to irrelevant content, error propagation, and redundancy, existing methods struggle to extract longer and more effective contexts. To address this issue, we introduce a novel conversational ASR system, extending the Conformer encoder-decoder model with cross-modal conversational representation. Our approach leverages a cross-modal extractor that combines pre-trained speech and text models through a specialized encoder and a modal-level mask input. This enables the extraction of richer historical speech context without explicit error propagation. We also incorporate conditional latent variational modules to learn conversational level attributes such as role preference and topic coherence. By introducing both cross-modal and conversational representations into the decoder, our model retains context over longer sentences without information loss, achieving relative accuracy improvements of 8.8% and 23% on Mandarin conversation datasets HKUST and MagicData-RAMC, respectively, compared to the standard Conformer model.},
+  selected     = {true}
+}
+
+@inproceedings{Wang2024multilevel,
+  title        = {Multi-level Temporal-channel Speaker Retrieval for Zero-shot Voice Conversion},
+  author       = {Wang, Zhichao and Xue, Liumeng and Kong, Qiuqiang and Xie, Lei and Chen, Yuanzhe and Tian, Qiao and Wang, Yuping},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2024},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2024.3407577},
+  arxiv        = {2305.07204},
+  abstract     = {Zero-shot voice conversion (VC) converts source speech into the voice of any desired speaker using only one utterance of the speaker without requiring additional model updates. Typical methods use a speaker representation from a pre-trained speaker verification (SV) model or learn speaker representation during VC training to achieve zero-shot VC. However, existing speaker modeling methods overlook the variation of speaker information richness in temporal and frequency channel dimensions of speech. This insufficient speaker modeling hampers the ability of the VC model to accurately represent unseen speakers who are not in the training dataset. In this study, we present a robust zero-shot VC model with multi-level temporal-channel retrieval, referred to as MTCR-VC. Specifically, to flexibly adapt to the dynamic-variant speaker characteristic in the temporal and channel axis of the speech, we propose a novel fine-grained speaker modeling method, called temporal-channel retrieval (TCR), to find out when and where speaker information appears in speech. It retrieves variable-length speaker representation from both temporal and channel dimensions under the guidance of a pre-trained SV model. Besides, inspired by the hierarchical process of human speech production, the MTCR speaker module stacks several TCR blocks to extract speaker representations from multi-granularity levels. Furthermore, to achieve better speech disentanglement and reconstruction, we introduce a cycle-based training strategy to simulate zero-shot inference recurrently. We adopt perpetual constraints on three aspects, including content, style, and speaker, to drive this process. Experiments demonstrate that MTCR-VC is superior to the previous zero-shot VC methods in modeling speaker timbre while maintaining good speech naturalness.},
+  selected     = {true}
+}
+
+@inproceedings{Yao2024distinctive,
+  title        = {Distinctive and Natural Speaker Anonymization via Singular Value Transformation-assisted Matrix},
+  author       = {Yao, Jixun and Wang, Qing and Guo, Pengcheng and Ning, Ziqian and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2024},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2024.3407600},
+  arxiv        = {2405.10786},
+  abstract     = {Speaker anonymization is an effective privacy protection solution that aims to conceal the speaker's identity while preserving the naturalness and distinctiveness of the original speech. Mainstream approaches use an utterance-level vector from a pre-trained automatic speaker verification (ASV) model to represent speaker identity, which is then averaged or modified for anonymization. However, these systems suffer from deterioration in the naturalness of anonymized speech, degradation in speaker distinctiveness, and severe privacy leakage against powerful attackers. To address these issues and especially generate more natural and distinctive anonymized speech, we propose a novel speaker anonymization approach that models a matrix related to speaker identity and transforms it into an anonymized singular value transformation-assisted matrix to conceal the original speaker identity. Our approach extracts frame-level speaker vectors from a pre-trained ASV model and employs an attention mechanism to create a speaker-score matrix and speaker-related tokens. Notably, the speaker-score matrix acts as the weight for the corresponding speaker-related token, representing the speaker's identity. The singular value transformation-assisted matrix is generated by recomposing the decomposed orthonormal eigenvectors matrix and non-linear transformed singular through Singular Value Decomposition (SVD). Experiments on VoicePrivacy Challenge datasets demonstrate the effectiveness of our approach in protecting speaker privacy under all attack scenarios while maintaining speech naturalness and distinctiveness.},
+  selected     = {true}
+}
+
+@inproceedings{Shao2023decoupling,
+  title        = {Decoupling and Interacting Multi-Task Learning Network for Joint Speech and Accent Recognition},
+  author       = {Shao, Qijie and Guo, Pengcheng and Yan, Jinghao and Hu, Pengfei and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2023},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2023.3332542},
+  arxiv        = {2311.07062},
+  abstract     = {Accents, as variations from standard pronunciation, pose significant challenges for speech recognition systems. Although joint automatic speech recognition (ASR) and accent recognition (AR) training has been proven effective in handling multi-accent scenarios, current multi-task ASR-AR approaches overlook the granularity differences between tasks. Fine-grained units capture pronunciation-related accent characteristics, while coarse-grained units are better for learning linguistic information. Moreover, an explicit interaction of two tasks can also provide complementary information and improve the performance of each other, but it is rarely used by existing approaches. In this paper, we propose a novel Decoupling and Interacting Multi-task Network (DIMNet) for joint speech and accent recognition, which is comprised of a connectionist temporal classification (CTC) branch, an AR branch, an ASR branch, and a bottom feature encoder. Specifically, AR and ASR are first decoupled by separated branches and two-granular modeling units to learn task-specific representations. The AR branch is from our previously proposed linguistic-acoustic bimodal AR model and the ASR branch is an encoder-decoder based Conformer model. Then, for the task interaction, the CTC branch provides aligned text for the AR task, while accent embeddings extracted from our AR model are incorporated into the ASR branch's encoder and decoder. Finally, during ASR inference, a cross-granular rescoring method is introduced to fuse the complementary information from the CTC and attention decoder after the decoupling. Our experiments on English and Chinese datasets demonstrate the effectiveness of the proposed model, which achieves 21.45%/28.53% AR accuracy relative improvement and 32.33%/14.55% ASR error rate relative reduction over a published standard baseline, respectively.},
+  selected     = {true}
+}
+
+@inproceedings{Li2023diclettts,
+  title        = {DiCLET-TTS: Diffusion Model based Cross-lingual Emotion Transfer for Text-to-Speech -- A Study between English and Mandarin},
+  author       = {Li, Tao and Hu, Chenxu and Cong, Jian and Zhu, Xinfa and Li, Jingbei and Tian, Qiao and Wang, Yuping and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2023},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/10244091},
+  demo         = {https://silyfox.github.io/DiCLETdemo/},
+  arxiv        = {2309.00883},
+  abstract     = {While the performance of cross-lingual TTS based on monolingual corpora has been significantly improved recently, generating cross-lingual speech still suffers from the foreign accent problem, leading to limited naturalness. Besides, current cross-lingual methods ignore modeling emotion, which is indispensable paralinguistic information in speech delivery. In this paper, we propose DiCLET-TTS, a Diffusion model based Cross-Lingual Emotion Transfer method that can transfer emotion from a source speaker to the intra- and cross-lingual target speakers. Specifically, to relieve the foreign accent problem while improving the emotion expressiveness, the terminal distribution of the forward diffusion process is parameterized into a speaker-irrelevant but emotion-related linguistic prior by a prior text encoder with the emotion embedding as a condition. To address the weaker emotional expressiveness problem caused by speaker disentanglement in emotion embedding, a novel orthogonal projection based emotion disentangling module (OP-EDM) is proposed to learn the speaker-irrelevant but emotion-discriminative embedding. Moreover, a condition-enhanced DPM decoder is introduced to strengthen the modeling ability of the speaker and the emotion in the reverse diffusion process to further improve emotion expressiveness in speech delivery. Cross-lingual emotion transfer experiments show the superiority of DiCLET-TTS over various competitive models and the good design of OP-EDM in learning speaker-irrelevant but emotion-discriminative embedding.},
+  selected     = {true}
+}
+
+@inproceedings{Wang2023msmvc,
+  title        = {MSM-VC: High-fidelity Source Style Transfer for Non-Parallel Voice Conversion by Multi-scale Style Modeling},
+  author       = {Wang, Zhichao and Wang, Xinsheng and Xie, Qicong and Li, Tao and Xie, Lei and Tian, Qiao and Wang, Yuping},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2023},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2023.3313414},
+  demo         = {https://kerwinchao.github.io/VCStyleModeling.github.io/},
+  arxiv        = {2309.01142},
+  abstract     = {In addition to conveying the linguistic content from source speech to converted speech, maintaining the speaking style of source speech also plays an important role in the voice conversion (VC) task, which is essential in many scenarios with highly expressive source speech, such as dubbing and data augmentation. Previous work generally took explicit prosodic features or fixed-length style embedding extracted from source speech to model the speaking style of source speech, which is insufficient to achieve comprehensive style modeling and target speaker timbre preservation. Inspired by the style's multi-scale nature of human speech, a multi-scale style modeling method for the VC task, referred to as MSM-VC, is proposed in this paper. MSM-VC models the speaking style of source speech from different levels. To effectively convey the speaking style and meanwhile prevent timbre leakage from source speech to converted speech, each level's style is modeled by specific representation. Specifically, prosodic features, pre-trained ASR model's bottleneck features, and features extracted by a model trained with a self-supervised strategy are adopted to model the frame, local, and global-level styles, respectively. Besides, to balance the performance of source style modeling and target speaker timbre preservation, an explicit constraint module consisting of a pre-trained speech emotion recognition model and a speaker classifier is introduced to MSM-VC. This explicit constraint module also makes it possible to simulate the style transfer inference process during the training to improve the disentanglement ability and alleviate the mismatch between training and inference. Experiments performed on the highly expressive speech corpus demonstrate that MSM-VC is superior to the state-of-the-art VC methods for modeling source speech style while maintaining good speech quality and speaker similarity.},
+  selected     = {true}
+}
+
+@inproceedings{Wang2023lmvc,
+  title        = {LM-VC: Zero-shot Voice Conversion via Speech Generation based on Language Models},
+  author       = {Wang, Zhichao and Chen, Yuanzhe and Xie, Lei and Tian, Qiao and Wang, Yuping},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2023},
+  abbr         = {SPL},
+  pdf          = {https://ieeexplore.ieee.org/document/10229308},
+  demo         = {https://kerwinchao.github.io/lmvc/},
+  arxiv        = {2306.10521},
+  abstract     = {Language model (LM) based audio generation frameworks, e.g., AudioLM, have recently achieved new state-of-the-art performance in zero-shot audio generation. In this paper, we explore the feasibility of LMs for zero-shot voice conversion. An intuitive approach is to follow AudioLM - Tokenizing speech into semantic and acoustic tokens respectively by HuBERT and SoundStream, and converting source semantic tokens to target acoustic tokens conditioned on acoustic tokens of the target speaker. However, such an approach encounters several issues: 1) the linguistic content contained in semantic tokens may get dispersed during multi-layer modeling while the lengthy speech input in the voice conversion task makes contextual learning even harder; 2) the semantic tokens still contain speaker-related information, which may be leaked to the target speech, lowering the target speaker similarity; 3) the generation diversity in the sampling of the LM can lead to unexpected outcomes during inference, leading to unnatural pronunciation and speech quality degradation. To mitigate these problems, we propose LM-VC, a two-stage language modeling approach that generates coarse acoustic tokens for recovering the source linguistic content and target speaker's timbre, and then reconstructs the fine for acoustic details as converted speech. Specifically, to enhance content preservation and facilitates better disentanglement, a masked prefix LM with a mask prediction strategy is used for coarse acoustic modeling. This model is encouraged to recover the masked content from the surrounding context and generate target speech based on the target speaker's utterance and corrupted semantic tokens. Besides, to further alleviate the sampling error in the generation, an external LM, which employs window attention to capture the local acoustic relations, is introduced to participate in the coarse acoustic modeling.},
+  selected     = {true}
+}
+
+@inproceedings{Wang2023timbrereserved,
+  title        = {Timbre-reserved Adversarial Attack in Speaker Identification},
+  author       = {Wang, Qing and Yao, Jixun and Zhang, Li and Guo, Pengcheng and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2023},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2023.3306714},
+  arxiv        = {2309.00929},
+  abstract     = {As a type of biometric identification, a speaker identification (SID) system is confronted with various kinds of attacks. The spoofing attacks typically imitate the timbre of the target speakers, while the adversarial attacks confuse the SID system by adding a well-designed adversarial perturbation to an arbitrary speech. Although the spoofing attack copies a similar timbre as the victim, it does not exploit the vulnerability of the SID model and may not make the SID system give the attacker's desired decision. As for the adversarial attack, despite the SID system can be led to a designated decision, it cannot meet the specified text or speaker timbre requirements for the specific attack scenarios. In this study, to make the attack in SID not only leverage the vulnerability of the SID model but also reserve the timbre of the target speaker, we propose a timbre-reserved adversarial attack in the speaker identification. We generate the timbre-reserved adversarial audios by adding an adversarial constraint during the different training stages of the voice conversion (VC) model. Specifically, the adversarial constraint is using the target speaker label to optimize the adversarial perturbation added to the VC model representations and is implemented by a speaker classifier joining in the VC model training. The adversarial constraint can help to control the VC model to generate the speaker-wised audio. Eventually, the inference of the VC model is the ideal adversarial fake audio, which is timbre-reserved and can fool the SID system.}
+}
+
+@inproceedings{Hou2022twostage,
+  title        = {Two-stage streaming keyword detection and localization with multi-scale depthwise temporal convolution},
+  author       = {Hou, Jingyong and Xie, Lei and Zhang, Shilei},
+  journal      = {Nerual Networks},
+  year         = {2022},
+  abbr         = {Neural Networks},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0893608022000739?via%3Dihub}
+}
+
+@inproceedings{Lei2022msemotts,
+  title        = {MsEmoTTS: Multi-Scale Emotion Transfer, Prediction, and Control for Emotional Speech Synthesis},
+  author       = {Lei, Yi and Yang, Shan and Wang, Xinsheng and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2022},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2022.3145293},
+  arxiv        = {2201.06460},
+  abstract     = {Expressive synthetic speech is essential for many human-computer interaction and audio broadcast scenarios, and thus synthesizing expressive speech has attracted much attention in recent years. Previous methods performed the expressive speech synthesis either with explicit labels or with a fixed-length style embedding extracted from reference audio, both of which can only learn an average style and thus ignores the multi-scale nature of speech prosody. In this paper, we propose MsEmoTTS, a multi-scale emotional speech synthesis framework, to model the emotion from different levels. Specifically, the proposed method is a typical attention-based sequence-to-sequence model and with proposed three modules, including global-level emotion presenting module (GM), utterance-level emotion presenting module (UM), and local-level emotion presenting module (LM), to model the global emotion category, utterance-level emotion variation, and syllable-level emotion strength, respectively. In addition to modeling the emotion from different levels, the proposed method also allows us to synthesize emotional speech in different ways, i.e., transferring the emotion from reference audio, predicting the emotion from input text, and controlling the emotion strength manually. Extensive experiments conducted on a Chinese emotional speech corpus demonstrate that the proposed method outperforms the compared reference audio-based and text-based emotional speech synthesis methods on the emotion transfer speech synthesis and text-based emotion prediction speech synthesis respectively. Besides, the experiments also show that the proposed method can control the emotion expressions flexibly. Detailed analysis shows the effectiveness of each module and the good design of the proposed method.}
+}
+
+@inproceedings{Xiong2022looklisten,
+  title        = {Look&Listen: Multi-Modal Correlation Learning for Active Speaker Detection and Speech Enhancement},
+  author       = {Xiong, Junwen and Zhou, Yu and Zhang, Peng and Xie, Lei and Huang, Wei and Zha, Yufei},
+  journal      = {IEEE Transactions on Multimedia},
+  year         = {2022},
+  abbr         = {TMM},
+  pdf          = {https://ieeexplore.ieee.org/document/9858007},
+  arxiv        = {2203.02216},
+  abstract     = {Active speaker detection and speech enhancement have become two increasingly attractive topics in audio-visual scenario understanding. According to their respective characteristics, the scheme of independently designed architecture has been widely used in correspondence to each single task. This may lead to the representation learned by the model being task-specific, and inevitably result in the lack of generalization ability of the feature based on multi-modal modeling. More recent studies have shown that establishing cross-modal relationship between auditory and visual stream is a promising solution for the challenge of audio-visual multi-task learning. Therefore, as a motivation to bridge the multi-modal associations in audio-visual tasks, a unified framework is proposed to achieve target speaker detection and speech enhancement with joint learning of audio-visual modeling in this study.}
+}
+
+@inproceedings{Wang2022anyonenet,
+  title        = {AnyoneNet: Synchronized Speech and Talking Head Generation for Arbitrary Persons},
+  author       = {Wang, Xinsheng and Xie, Qicong and Zhu, Jihua and Xie, Lei and Scharenborg, Odette},
+  journal      = {IEEE Transactions on Multimedia},
+  year         = {2022},
+  abbr         = {TMM},
+  pdf          = {https://ieeexplore.ieee.org/document/9917325},
+  arxiv        = {2108.04325},
+  abstract     = {Automatically generating videos in which synthesized speech is synchronized with lip movements in a talking head has great potential in many human-computer interaction scenarios. In this paper, we present an automatic method to generate synchronized speech and talking-head videos on the basis of text and a single face image of an arbitrary person as input. In contrast to previous text-driven talking head generation methods, which can only synthesize the voice of a specific person, the proposed method is capable of synthesizing speech for any person that is inaccessible in the training stage. Specifically, the proposed method decomposes the generation of synchronized speech and talking head videos into two stages, i.e., a text-to-speech (TTS) stage and a speech-driven talking head generation stage. The proposed TTS module is a face-conditioned multi-speaker TTS model that gets the speaker identity information from face images instead of speech, which allows us to synthesize a personalized voice on the basis of the input face image. To generate the talking head videos from the face images, a facial landmark-based method that can predict both lip movements and head rotations is proposed. Extensive experiments demonstrate that the proposed method is able to generate synchronized speech and talking head videos for arbitrary persons and non-persons. Synthesized speech shows consistency with the given face regarding to the synthesized voice's timbre and one's appearance in the image, and the proposed landmark-based talking head method outperforms the state-of-the-art landmark-based method on generating natural talking head videos.}
+}
+
+@inproceedings{Hao2022neural,
+  title        = {Neural speech enhancement with unsupervised pre-training and mixture training},
+  author       = {Hao, Xiang and Xu, Chenglin and Xie, Lei},
+  journal      = {Nerual Networks},
+  year         = {2022},
+  abbr         = {Neural Networks},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0893608022004543?via%3Dihub}
+}
+
+@inproceedings{Lei2022crossspeaker,
+  title        = {Cross-speaker Emotion Transfer through Information Perturbation in Emotional Speech Synthesis},
+  author       = {Lei, Yi and Yang, Shan and Zhu, Xinfa and Xie, Lei and Su, Dan},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2022},
+  abbr         = {SPL},
+  pdf          = {https://xplorestaging.ieee.org/document/9874835}
+}
+
+@inproceedings{Xue2022paratts,
+  title        = {ParaTTS: Learning Linguistic and Prosodic Cross-sentence Information in Paragraph-based TTS},
+  author       = {Xue, Liumeng and Soong, Frank K. and Zhang, Shaofei and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2022},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2022.3202126},
+  arxiv        = {2209.06484},
+  abstract     = {Recent advancements in neural end-to-end TTS models have shown high-quality, natural synthesized speech in a conventional sentence-based TTS. However, it is still challenging to reproduce similar high quality when a whole paragraph is considered in TTS, where a large amount of contextual information needs to be considered in building a paragraph-based TTS model. To alleviate the difficulty in training, we propose to model linguistic and prosodic information by considering cross-sentence, embedded structure in training. Three sub-modules, including linguistics-aware, prosody-aware and sentence-position networks, are trained together with a modified Tacotron2. Specifically, to learn the information embedded in a paragraph and the relations among the corresponding component sentences, we utilize linguistics-aware and prosody-aware networks. The information in a paragraph is captured by encoders and the inter-sentence information in a paragraph is learned with multi-head attention mechanisms. The relative sentence position in a paragraph is explicitly exploited by a sentence-position network. Trained on a storytelling audio-book corpus (4.08 hours), recorded by a female Mandarin Chinese speaker, the proposed TTS model demonstrates that it can produce rather natural and good-quality speech paragraph-wise. The cross-sentence contextual information, such as break and prosodic variations between consecutive sentences, can be better predicted and rendered than the sentence-based model. Tested on paragraph texts, of which the lengths are similar to, longer than, or much longer than the typical paragraph length of the training data, the TTS speech produced by the new model is consistently preferred over the sentence-based model in subjective tests and confirmed in objective measures.}
+}
+
+@inproceedings{Du2022noiserobust,
+  title        = {Noise-robust voice conversion with domain adversarial training},
+  author       = {Du, Hongqiang and Xie, Lei and Li, Haizhou},
+  journal      = {Nerual Networks},
+  year         = {2022},
+  abbr         = {Neural Networks},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S089360802200003X?via%3Dihub},
+  demo         = {https://dhqadg.github.io/noise-robust/},
+  arxiv        = {2201.10693},
+  abstract     = {Voice conversion has made great progress in the past few years under the studio-quality test scenario in terms of speech quality and speaker similarity. However, in real applications, test speech from source speaker or target speaker can be corrupted by various environment noises, which seriously degrade the speech quality and speaker similarity. In this paper, we propose a novel encoder-decoder based noise-robust voice conversion framework, which consists of a speaker encoder, a content encoder, a decoder, and two domain adversarial neural networks. Specifically, we integrate disentangling speaker and content representation technique with domain adversarial training technique. Domain adversarial training makes speaker representations and content representations extracted by speaker encoder and content encoder from clean speech and noisy speech in the same space, respectively. In this way, the learned speaker and content representations are noise-invariant. Therefore, the two noise-invariant representations can be taken as input by the decoder to predict the clean converted spectrum. The experimental results demonstrate that our proposed method can synthesize clean converted speech under noisy test scenarios, where the source speech and target speech can be corrupted by seen or unseen noise types during the training process. Additionally, both speech quality and speaker similarity are improved.}
+}
+
+@inproceedings{An2022disentangling,
+  title        = {Disentangling Style and Speaker Attributes for TTS Style Transfer},
+  author       = {An, Xiaochun and Soong, Frank K. and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2022},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2022.3145297},
+  demo         = {https://xiaochunan.github.io/disentangling/index.html},
+  arxiv        = {2201.09472},
+  abstract     = {End-to-end neural TTS has shown improved performance in speech style transfer. However, the improvement is still limited by the available training data in both target styles and speakers. Additionally, degenerated performance is observed when the trained TTS tries to transfer the speech to a target style from a new speaker with an unknown, arbitrary style. In this paper, we propose a new approach to seen and unseen style transfer training on disjoint, multi-style datasets, i.e., datasets of different styles are recorded, one individual style by one speaker in multiple utterances. An inverse autoregressive flow (IAF) technique is first introduced to improve the variational inference for learning an expressive style representation. A speaker encoder network is then developed for learning a discriminative speaker embedding, which is jointly trained with the rest neural TTS modules. The proposed approach of seen and unseen style transfer is effectively trained with six specifically-designed objectives: reconstruction loss, adversarial loss, style distortion loss, cycle consistency loss, style classification loss, and speaker classification loss. Experiments demonstrate, both objectively and subjectively, the effectiveness of the proposed approach for seen and unseen style transfer tasks. The performance of our approach is superior to and more robust than those of four other reference systems of prior art.}
+}
+
+@inproceedings{Lei2022crossspeaker,
+  title        = {Cross-speaker Emotion Transfer through Information Perturbation in Emotional Speech Synthesis},
+  author       = {Lei, Yi and Yang, Shan and Zhu, Xinfa and Xie, Lei and Su, Dan},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2022},
+  abbr         = {SPL},
+  pdf          = {https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9874835&utm_source=clarivate&getft_integrator=clarivate}
+}
+
+@inproceedings{Li2021crossspeaker,
+  title        = {Cross-Speaker Emotion Disentangling and Transfer for End-to-End Speech Synthesis},
+  author       = {Li, Tao and Wang, Xinsheng and Xie, Qicong and Wang, Zhichao and Xie, Lei},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2021},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2022.3164181},
+  arxiv        = {2109.06733},
+  abstract     = {The cross-speaker emotion transfer task in text-to-speech (TTS) synthesis particularly aims to synthesize speech for a target speaker with the emotion transferred from reference speech recorded by another (source) speaker. During the emotion transfer process, the identity information of the source speaker could also affect the synthesized results, resulting in the issue of speaker leakage. This paper proposes a new method with the aim to synthesize controllable emotional expressive speech and meanwhile maintain the target speaker's identity in the cross-speaker emotion TTS task. The proposed method is a Tacotron2-based framework with emotion embedding as the conditioning variable to provide emotion information. Two emotion disentangling modules are contained in our method to 1) get speaker-irrelevant and emotion-discriminative embedding, and 2) explicitly constrain the emotion and speaker identity of synthetic speech to be that as expected. Moreover, we present an intuitive method to control the emotion strength in the synthetic speech for the target speaker. Specifically, the learned emotion embedding is adjusted with a flexible scalar value, which allows controlling the emotion strength conveyed by the embedding. Extensive experiments have been conducted on a Mandarin disjoint corpus, and the results demonstrate that the proposed method is able to synthesize reasonable emotional speech for the target speaker. Compared to the state-of-the-art reference embedding learned methods, our method gets the best performance on the cross-speaker emotion transfer task, indicating that our method achieves the new state-of-the-art performance on learning the speaker-irrelevant emotion embedding. Furthermore, the strength ranking test and pitch trajectories plots demonstrate that the proposed method can effectively control the emotion strength, leading to prosody-diverse synthetic speech.}
+}
+
+@inproceedings{Du2021factorized,
+  title        = {Factorized WaveNet for voice conversion with limited data},
+  author       = {Du, Hongqiang and Tian, Xiaohai and Xie, Lei and Li, Haizhou},
+  journal      = {Speech Communication},
+  year         = {2021},
+  abbr         = {Speech Communication},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0167639321000315}
+}
+
+@inproceedings{An2021effective,
+  title        = {Effective and direct control of neural TTS prosody by removing interactions between different attributes},
+  author       = {An, Xiaochun and Soong, Frank K. and Yang, Shan and Xie, Lei},
+  journal      = {Computer Speech & Language},
+  year         = {2021},
+  abbr         = {Computer Speech and Langauge},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0893608021002380},
+  demo         = {https://xiaochunan.github.io/prosody/index.html}
+}
+
+@inproceedings{Lv2021letdecoder,
+  title        = {LET-Decoder: A WFST-based lazy-evaluation token-group decoder with exact lattice generation},
+  author       = {Lv, Hang and Povey, Daniel and Yarmohammadi, Mahsa and Li, Ke and Wang, Yiming and Xei, Lei and Khudanpur, Sanjeev},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2021},
+  abbr         = {SPL},
+  pdf          = {https://www.danielpovey.com/files/2021_spl_lazy_evaluation_decoder.pdf}
+}
+
+@inproceedings{Xue2021cycle,
+  title        = {Cycle consistent network for end-to-end style transfer TTS training},
+  author       = {Xue, Liumeng and Pan, Shifeng and He, Lei and Xie, Lei and Soong, Frank K.},
+  journal      = {Nerual Networks},
+  year         = {2021},
+  abbr         = {Neural Networks},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S089360802100085X},
+  demo         = {https://lmxue.github.io/style-transfer-journal/index.html},
+  arxiv        = {2201.09472},
+  abstract     = {End-to-end neural TTS has shown improved performance in speech style transfer. However, the improvement is still limited by the available training data in both target styles and speakers. Additionally, degenerated performance is observed when the trained TTS tries to transfer the speech to a target style from a new speaker with an unknown, arbitrary style. In this paper, we propose a new approach to seen and unseen style transfer training on disjoint, multi-style datasets, i.e., datasets of different styles are recorded, one individual style by one speaker in multiple utterances. An inverse autoregressive flow (IAF) technique is first introduced to improve the variational inference for learning an expressive style representation. A speaker encoder network is then developed for learning a discriminative speaker embedding, which is jointly trained with the rest neural TTS modules. The proposed approach of seen and unseen style transfer is effectively trained with six specifically-designed objectives: reconstruction loss, adversarial loss, style distortion loss, cycle consistency loss, style classification loss, and speaker classification loss. Experiments demonstrate, both objectively and subjectively, the effectiveness of the proposed approach for seen and unseen style transfer tasks. The performance of our approach is superior to and more robust than those of four other reference systems of prior art.}
+}
+
+@inproceedings{Yang2020adversarial,
+  title        = {Adversarial Feature Learning and Unsupervised Clustering based Speech Synthesis for Found Data with Acoustic and Textual Noise},
+  author       = {Yang, Shan and Wang, Yuxuan and Xie, Lei},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2020},
+  abbr         = {SPL},
+  pdf          = {https://xplorestaging.ieee.org/document/9201416},
+  demo         = {https://syang1993.github.io/found-data/},
+  arxiv        = {2004.13595},
+  abstract     = {Attention-based sequence-to-sequence (seq2seq) speech synthesis has achieved extraordinary performance. But a studio-quality corpus with manual transcription is necessary to train such seq2seq systems. In this paper, we propose an approach to build high-quality and stable seq2seq based speech synthesis system using challenging found data, where training speech contains noisy interferences (acoustic noise) and texts are imperfect speech recognition transcripts (textual noise). To deal with text-side noise, we propose a VQVAE based heuristic method to compensate erroneous linguistic feature with phonetic information learned directly from speech. As for the speech-side noise, we propose to learn a noise-independent feature in the auto-regressive decoder through adversarial training and data augmentation, which does not need an extra speech enhancement model. Experiments show the effectiveness of the proposed approach in dealing with text-side and speech-side noise. Surpassing the denoising approach based on a state-of-the-art speech enhancement model, our system built on noisy found data can synthesize clean and high-quality speech with MOS close to the system built on the clean counterpart.}
+}
+
+@inproceedings{Yuan2020fast,
+  title        = {Fast Query-by-example Speech Search using Attention-based Deep Binary Embeddings},
+  author       = {Yuan, Yougen and Xie, Lei and Leung, Cheung-Chi and Chen, Hongjie and Ma, Bin},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2020},
+  abbr         = {TASLP},
+  pdf          = {https://dl.acm.org/doi/10.1109/TASLP.2020.2998277}
+}
+
+@inproceedings{Yang2020on,
+  title        = {On the localness modeling for the self-attention based end-to-end speech synthesis},
+  author       = {Yang, Shan and Lu, Heng and Kang, Shiyin and Xue, Liumeng and Xiao, Jinba and Su, Dan and Xie, Lei and Yu, Dong},
+  journal      = {Nerual Networks},
+  year         = {2020},
+  abbr         = {Neural Networks},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0893608020300447?via%3Dihub},
+  arxiv        = {1810.11960}
+}
+
+@inproceedings{Mi2020loanword,
+  title        = {Loanword Identification in Low-resource Languages with Minimal Supervision},
+  author       = {Mi, Chenggang and Xie, Lei and Zhang, Yanning},
+  journal      = {ACM Transactions on Asian and Low-Resource Language Information Processing},
+  year         = {2020},
+  abbr         = {TALLIP},
+  pdf          = {https://dl.acm.org/doi/10.1145/3374212}
+}
+
+@inproceedings{Mi2019improving,
+  title        = {Improving Adversarial Neural Machine Translation for Morphologically Rich Language},
+  author       = {Mi, Chenggang and Xie, Lei and Zhang, Yanning},
+  journal      = {IEEE Transactions on Emerging Topics in Computational Intelligence},
+  year         = {2019},
+  abbr         = {TETCI},
+  pdf          = {https://ieeexplore.ieee.org/document/9099374}
+}
+
+@inproceedings{Sun2019adversarial,
+  title        = {Adversarial Regularization for Attention Based End-to-End Robust Speech Recognition},
+  author       = {Sun, Sining and Guo, Pengcheng and Xie, Lei and Hwang, Mei-Yuh},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2019},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/8788563}
+}
+
+@inproceedings{Hou2019region,
+  title        = {Region Proposal Network Based Small-Footprint Keyword Spotting},
+  author       = {Hou, Jingyong and Shi, Yangyang and Ostendorf, Mari and Hwang, Mei-Yuh and Xie, Lei},
+  journal      = {IEEE Signal Processing Letters},
+  year         = {2019},
+  abbr         = {SPL},
+  pdf          = {https://ieeexplore.ieee.org/document/8807313}
+}
+
+@inproceedings{Zhu2019prealignment,
+  title        = {Pre-Alignment Guided Attention for Improving Training Efficiency and Model Stability in End-to-End Speech Synthesis},
+  author       = {Zhu, Xiaolian and Zhang, Yuchao and Yang, Shan and Xue, Liumeng and Xie, Lei},
+  journal      = {IEEE Access},
+  year         = {2019},
+  abbr         = {Access},
+  pdf          = {https://ieeexplore.ieee.org/document/8703406}
+}
+
+@inproceedings{Yuan2019querybyexample,
+  title        = {Query-by-Example Speech Search Using Recurrent Neural Acoustic Word Embeddings With Temporal Context},
+  author       = {Yuan, Yougen and Leung, Cheung-Chi and Xie, Lei and Chen, Hongjie and Ma, Bin},
+  journal      = {IEEE Access},
+  year         = {2019},
+  abbr         = {Access},
+  pdf          = {https://ieeexplore.ieee.org/document/8721106}
+}
+
+@inproceedings{Xie2018guest,
+  title        = {Guest Editorial: Advances in Deep Learning for Speech Processing},
+  author       = {Xie, Lei and Lee, Tan and Mak, Man-Wai},
+  journal      = {Journal of Signal Processing Systems},
+  year         = {2018},
+  abbr         = {Journal of Signal Processing Systems},
+  pdf          = {https://link.springer.com/article/10.1007/s11265-018-1333-3?utm_source=getftr&utm_medium=getftr&utm_campaign=getftr_pilot&getft_integrator=clarivate}
+}
+
+@inproceedings{Yuan2017sound,
+  title        = {Sound image externalization for headphone based real-time 3D audio},
+  author       = {Yuan, Yougen and Xie, Lei and Fu, Zhong-Hua and Cong, Qi},
+  journal      = {Frontiers of Computer Science},
+  year         = {2017},
+  abbr         = {Frontiers of Computer Science},
+  pdf          = {https://link.springer.com/article/10.1007/s11704-016-6182-2}
+}
+
+@inproceedings{Xu2017a,
+  title        = {A Bidirectional LSTM Approach with Word Embeddings for Sentence Boundary Detection},
+  author       = {Xu, Chenglin and Xie, Lei and Xiao, Xiong},
+  journal      = {Journal of Signal Processing Systems},
+  year         = {2017},
+  abbr         = {Journal of Signal Processing Systems},
+  pdf          = {https://link.springer.com/article/10.1007/s11265-017-1289-8}
+}
+
+@inproceedings{Chen2017multitask,
+  title        = {Multi-Task Feature Learning for Low-Resource Query-by-Example Spoken Term Detection},
+  author       = {Chen, Hongjie and Leung, Cheung-Chi and Xie, Lei and Ma, Bin and Li, Haizhou},
+  journal      = {IEEE Journal of Selected Topics in Signal Processing},
+  year         = {2017},
+  abbr         = {J-STSP},
+  pdf          = {Multitask Feature Learning for Low-Resource Query-by-Example Spoken Term Detection | IEEE Journals & Magazine | IEEE Xplore}
+}
+
+@inproceedings{Yu2017learning,
+  title        = {Learning Distributed Sentence Representations for Story Segmentation},
+  author       = {Yu, Jia and Xie, Lei and Xiao, Xiong and Chng, Eng Siong},
+  journal      = {Signal Processing},
+  year         = {2017},
+  abbr         = {Signal Processing},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0165168417302724?via%3Dihub}
+}
+
+@inproceedings{Chen2016modeling,
+  title        = {Modeling Latent Topics and Temporal Distance for Story Segmentation of Broadcast News},
+  author       = {Chen, Hongjie and Xie, Lei and Leung, Cheung-Chi and Ma, Bin and Li, Haizhou},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2016},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/7738550}
+}
+
+@inproceedings{Sun2016an,
+  title        = {An unsupervised deep domain adaptation approach for robust speech recognition},
+  author       = {Sun, Sining and Zhang, Binbin and Xie, Lei and Zhang, Yanning},
+  journal      = {Neurocomputing},
+  year         = {2016},
+  abbr         = {Neurocomputing},
+  pdf          = {https://ieeexplore.ieee.org/document/8268938}
+}
+
+@inproceedings{Fan2015a,
+  title        = {A Deep Bidirectional Lstm Approach for Video-Realistic Talking Head},
+  author       = {Fan, Bo and Xie, Lei and Yang, Shan and Wang, Lijuan and Soong, Frank K.},
+  journal      = {Multimedia Tools and Applications},
+  year         = {2015},
+  abbr         = {MTA},
+  pdf          = {https://link.springer.com/article/10.1007/s11042-015-2944-3}
+}
+
+@inproceedings{Xie2014multimodal,
+  title        = {Multimodal Joint Information Processing in Human Machine Interaction: Recent Advances},
+  author       = {Xie, Lei and Deng, Zhigang and Cox, Stephen},
+  journal      = {Multimedia Tools and Applications},
+  year         = {2014},
+  abbr         = {MTA},
+  pdf          = {https://link.springer.com/article/10.1007/s11042-013-1748-6}
+}
+
+@inproceedings{Xie2014a,
+  title        = {A Statistical Parametric Approach to Video-Realistic Text-Driven Talking Avatar},
+  author       = {Xie, Lei and Sun, Naicai and Fan, Bo},
+  journal      = {Multimedia Tools and Applications},
+  year         = {2014},
+  abbr         = {MTA},
+  pdf          = {https://link.springer.com/content/pdf/10.1007/s11042-013-1633-3?utm_source=clarivate&getft_integrator=clarivate}
+}
+
+@inproceedings{Chen2014topic,
+  title        = {Topic Segmentation on Spoken Documents Using Self-Validated Acoustic Cuts},
+  author       = {Chen, Hongjie and Xie, Lei and Feng, Wei and Zheng, Lilei and Zhang, Yanning},
+  journal      = {Soft Computing},
+  year         = {2014},
+  abbr         = {SOFT COMPUT},
+  pdf          = {https://link.springer.com/article/10.1007/s00500-014-1383-9}
+}
+
+@inproceedings{Ding2014head,
+  title        = {Head Motion Synthesis From Speech Using Deep Neural Networks},
+  author       = {Ding, Chuang and Xie, Lei and Zhu, Pengcheng},
+  journal      = {Multimedia Tools and Applications},
+  year         = {2014},
+  abbr         = {MTA},
+  pdf          = {https://link.springer.com/article/10.1007/s11042-014-2156-2}
+}
+
+@inproceedings{Zhou2014tennis,
+  title        = {Tennis Ball Tracking Using A Two-Layered Data Association Approach},
+  author       = {Zhou, Xiangzeng and Xie, Lei and Huang, Qiang and Cox, Stephen and Zhang, Yanning},
+  journal      = {IEEE Transactions on Multimedia},
+  year         = {2014},
+  abbr         = {TMM},
+  pdf          = {https://ieeexplore.ieee.org/document/6985674}
+}
+
+@inproceedings{Li2013head,
+  title        = {Head Motion Generation for Speech-Driven Talking Avatar},
+  author       = {Li, Bingfeng and Xie, Lei and Zhu, Pengcheng and Bo, Fan},
+  journal      = {Journal of Tsinghua University (Science and Technology)},
+  year         = {2013},
+  abbr         = {QHDXXB},
+  pdf          = {https://kns.cnki.net/reader/flowpdf?invoice=WLqKcNB0HQiC6xUrSmwdjw9qZSlcMcUxNhC7ixnT%2F2q8hr9JIhBYFFxd2SM5RQv2KMpJ5aRo4CxYOvG0PsWP7EyaQ5mnqZuo6tDNXwvYWgG2QQlYaB8VFaBXMp9EcekbLfyjBJ8OSDHbKaGad3ru%2FrAv2s56ykVqGFgFbywQtxw%3D&platform=NZKPT&sourcetype=nxgp&product=CJFQ&filename=QHXB201306035&tablename=cjfd2013&type=JOURNAL&scope=trial&cflag=overlay&dflag=pdf&pages=&language=CHS&trial=&nonce=3D172F4E0E4A4FCB970C66577D06F969}
+}
+
+@inproceedings{Xie2013mandarin,
+  title        = {Mandarin speech pattern discovery using segmental dynamic tim},
+  author       = {Yang and Peng and Xie, Lei and Chen and Hongjie},
+  journal      = {Journal of Tsinghua University (Science and Technology)},
+  year         = {2013},
+  abbr         = {QHDXXB},
+  pdf          = {https://kns.cnki.net/reader/flowpdf?invoice=I%2FoaIv82GIyLwmZuRoDZwWM0zD722TQ0u1R2%2B%2F2WIKBr2Wf3H1OSmtI%2FD04pBglrYsN%2FMg7nTl9QQ2r5BsHa%2BbavqxtleRCcmPr5NXmFbQa1sU3tan%2F1gvLo0SyirTB%2F9ufC3MkhQmhkd1hoaGT9ekiKu%2BKqEFCFfBAJEWoEIu4%3D&platform=NZKPT&sourcetype=nxgp&product=CJFQ&filename=QHXB201306036&tablename=cjfd2013&type=JOURNAL&scope=trial&cflag=overlay&dflag=pdf&pages=&language=CHS&trial=&nonce=DE1A899C3E7C43DCB1DB9BCFA5BD91C6}
+}
+
+@inproceedings{Xie2011on,
+  title        = {On The Effectiveness Of Subwords for Lexical Cohesion Based Story Segmentation Of Chinese Broadcast News},
+  author       = {Xie, Lei and Yang, Yulian and Liu, Zhi-Qiang},
+  journal      = {Information Sciences},
+  year         = {2011},
+  abbr         = {Information Sciences},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0020025511000958}
+}
+
+@inproceedings{Xie2011pitchdensitybased,
+  title        = {Pitch-Density-Based Features And An Svm Binary Tree Approach for Multi-Class Audio Classification in Broadcast News},
+  author       = {Xie, Lei and Fu, Zhong-Hua and Feng, Wei and Luo, Yong},
+  journal      = {Multimedia Systems},
+  year         = {2011},
+  abbr         = {Multimedia Syst},
+  pdf          = {https://link.springer.com/article/10.1007/s00530-010-0205-x}
+}
+
+@inproceedings{Bingfeng2011realtime,
+  title        = {Real-Time Speech Driven Talking Avatar},
+  author       = {Bingfeng, Li and Lei, Xie and Xiangzeng, Zhou and Zhonghua, Fu and Yanning, Zhang},
+  journal      = {Journal of Tsinghua University (Science and Technology)},
+  year         = {2011},
+  abbr         = {QHDXXB},
+  pdf          = {https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFD&dbname=CJFD2011&filename=QHXB201109004}
+}
+
+@inproceedings{Jian2011semi,
+  title        = {Semi - Blind Dual - Microphone Noise Reduction with Known Target Localization},
+  author       = {Jian, Zhang and Zhonghua, Fu and Lei, Xie and Yali, Zhao},
+  journal      = {Journal of Tsinghua University (Science and Technology)},
+  year         = {2011},
+  abbr         = {QHDXXB},
+  pdf          = {https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFD&dbname=CJFD2011&filename=QHXB201109011}
+}
+
+@inproceedings{Li-Lei2011an,
+  title        = {An Automatic Caption Generator for Mandarin Broadcast News},
+  author       = {Li-Lei, Zheng and Lei, Xie and Mi-Mi, Lu and Xiao-Xuan, Wang and Yu-Lian, Yang and Yan-Ning, Zhang},
+  journal      = {Chinese Journal of Electronics},
+  year         = {2011},
+  abbr         = {CJE},
+  pdf          = {https://www.engineeringvillage.com/app/doc/?docid=cpx_6e3d60130faff9047M4dbb2061377553}
+}
+
+@inproceedings{Xie2011laplacian,
+  title        = {Laplacian Eigenmaps for Automatic Story Segmentation Of Broadcast News},
+  author       = {Xie, Lei and Zheng, Lilei and Liu, Zihan and Zhang, Yanning},
+  journal      = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  year         = {2011},
+  abbr         = {TASLP},
+  pdf          = {https://ieeexplore.ieee.org/document/5934585}
+}
+
+@inproceedings{Ni2010minimizing,
+  title        = {Minimizing The Expected Complete Influence Time Of A Social Network},
+  author       = {Ni, Yaodong and Xie, Lei and Liu, Zhi - Qiang},
+  journal      = {Information Sciences},
+  year         = {2010},
+  abbr         = {Information Sciences},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0020025510001246?via%3Dihub2514-2527,}
+}
+
+@inproceedings{Feng2009audio,
+  title        = {Audio - Visual Human Recognition Using Semi - Supervised Spectral Learning And Hidden Markov Models},
+  author       = {Feng, Wei and Xie, Lei and Zeng, Jia and Liu, Zhi - Qiang},
+  journal      = {Journal of Visual Languages and Computing},
+  year         = {2009},
+  abbr         = {JVLC},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S1045926X09000081}
+}
+
+@inproceedings{Zeng2009cascade,
+  title        = {Cascade Markov Random Fields for Stroke Extraction Of Chinese Characters},
+  author       = {Zeng, Jia and Feng, Wei and Xie, Lei and Liu, Zhi-Qiang},
+  journal      = {Information Sciences},
+  year         = {2009},
+  abbr         = {Information Sciences},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0020025509004022}
+}
+
+@inproceedings{Xie2009dynamic,
+  title        = {Dynamic Bayesian Network Inversion for Robust Speech Recognition},
+  author       = {Xie, Lei},
+  journal      = {IEICE Transactions on Information and Systems},
+  year         = {2009},
+  abbr         = {IEICE TIS},
+  pdf          = {https://globals.ieice.org/en_transactions/information/10.1093/ietisy/e90-d.7.1117/_p}
+}
+
+@inproceedings{Xie2008discovering,
+  title        = {Discovering Salient Prosodic Cues And Their Interactions for Automatic Story Segmentation in Mandarin Broadcast News},
+  author       = {Xie, Lei},
+  journal      = {Multimedia Systems},
+  year         = {2008},
+  abbr         = {Multimedia Syst},
+  pdf          = {https://link.springer.com/article/10.1007/s00530-008-0141-1}
+}
+
+@inproceedings{Xie2006realistic,
+  title        = {Realistic Mouth - Synching for Speech - Driven Talking Face Using Articulatory Modelling},
+  author       = {Xie, Lei and Liu, Zhi - Qiang},
+  journal      = {IEEE Transactions on Multimedia},
+  year         = {2006},
+  abbr         = {TMM},
+  pdf          = {https://ieeexplore.ieee.org/document/4130381}
+}
+
+@inproceedings{Xie2006a,
+  title        = {A Coupled Hmm Approach for Video-Realistic Speech Animation},
+  author       = {Xie, Lei and Liu, Zhi-Qiang},
+  journal      = {Pattern Recognition},
+  year         = {2006},
+  abbr         = {PR},
+  pdf          = {https://www.sciencedirect.com/science/article/pii/S0031320306004973?via%3Dihub}
+}

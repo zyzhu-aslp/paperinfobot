@@ -235,6 +235,11 @@ def main():
         data = json.load(f)
 
     items = data.get("data", {}).get("items", [])
+    # 按时间倒序排序
+    items.sort(
+        key=lambda item: format_year_token(str(item.get("fields", {}).get("时间", ""))),
+        reverse=True,
+    )
     results_cn = []
     results_en = []
 
@@ -246,6 +251,7 @@ def main():
             continue
 
         year = format_year_token(str(fields.get("时间", "")))
+        year_cn = f"{year}年" if year and not year.endswith("年") else year
         conf_name = extract_conf_name(fields)
 
         comp_cn = first_non_empty(fields.get("竞赛名称-中文"), "未知竞赛")
@@ -268,8 +274,8 @@ def main():
             cn_prefix = []
             if conf_name:
                 cn_prefix.append(conf_name)
-            if year:
-                cn_prefix.append(year)
+            if year_cn:
+                cn_prefix.append(year_cn)
 
             track_cn_show = track_cn if not is_unknown_text(track_cn) else ""
             if track_cn_show:
