@@ -97,11 +97,101 @@ def extract_year(fields: dict) -> str:
     
     return "YYYY"
 
+
+# ── 英文月份名 -> 数字 ──────────────────────────────────────────
+_MONTH_NAME_TO_NUM = {
+    "january": 1, "february": 2, "march": 3, "april": 4,
+    "may": 5, "june": 6, "july": 7, "august": 8,
+    "september": 9, "october": 10, "november": 11, "december": 12,
+}
+
+
+def _parse_conference_time(fields: dict) -> str:
+    """
+    会议成果：用「年份」+「会议时间」起始日期拼出 YYYY-MM-DD。
+
+    会议时间样例（不含年份）：
+      "12月2日-5日"  "2月23日-3月2日"  "4 月 24 日–28 日"
+    取范围的起始月+起始日，与年份合并。
+    """
+    year_raw = fields.get("年份")
+    if isinstance(year_raw, list) and year_raw:
+        year = int(year_raw[0])
+    elif isinstance(year_raw, (int, float)):
+        year = int(year_raw)
+    else:
+        year_str = get_field_value(year_raw)
+        if year_str and year_str.isdigit():
+            year = int(year_str)
+        else:
+            return ""
+
+    meeting_text = get_field_value(fields.get("会议时间"))
+    if not meeting_text:
+        return f"{year:04d}-01-01"
+
+    # 匹配起始月和起始日：「X月Y日」允许数字和"月/日"之间有空格
+    m = re.search(r'(\d{1,2})\s*月\s*(\d{1,2})\s*日', meeting_text)
+    if m:
+        month = int(m.group(1))
+        day = int(m.group(2))
+        return f"{year:04d}-{month:02d}-{day:02d}"
+
+    return f"{year:04d}-01-01"
+
+
+def _parse_journal_time(fields: dict) -> str:
+    """
+    期刊成果：解析「发表时间」字段为 YYYY-MM-DD。
+
+    常见格式：
+      "23 July 2024"          -> 2024-07-23
+      "June 2022"             -> 2022-06-01  （无日，默认 01）
+      "2024-09"               -> 2024-09-01  （无日，默认 01）
+      " 09 August 2024"       -> 2024-08-09  （前后有空格）
+      "January  2018"         -> 2018-01-01  （多余空格）
+    """
+    raw = (fields.get("发表时间") or "").strip()
+    if not raw:
+        return ""
+
+    # 格式 1：YYYY-MM（如 "2024-09"）
+    m = re.match(r'^(\d{4})-(\d{1,2})$', raw)
+    if m:
+        return f"{int(m.group(1)):04d}-{int(m.group(2)):02d}-01"
+
+    # 格式 2：DD Month YYYY（如 "23 July 2024"）
+    m = re.match(r'^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$', raw)
+    if m:
+        day = int(m.group(1))
+        month = _MONTH_NAME_TO_NUM.get(m.group(2).lower(), 0)
+        year = int(m.group(3))
+        if month:
+            return f"{year:04d}-{month:02d}-{day:02d}"
+
+    # 格式 3：Month YYYY（如 "June 2022"）
+    m = re.match(r'^([A-Za-z]+)\s+(\d{4})$', raw)
+    if m:
+        month = _MONTH_NAME_TO_NUM.get(m.group(1).lower(), 0)
+        year = int(m.group(2))
+        if month:
+            return f"{year:04d}-{month:02d}-01"
+
+    # 兜底：尝试从字符串里提取四位年份
+    m = re.search(r'(19|20)\d{2}', raw)
+    if m:
+        return f"{m.group(0)}-01-01"
+
+    return ""
+
 def main():
     parser = argparse.ArgumentParser(description="Convert JSON records to BibTeX format.")
-    parser.add_argument("-input_json", default="../record/会议成果_mp_records.json", help="Path to the input JSON file.")
-    parser.add_argument("-output_bib", default="../bibtex/会议成果.bib", help="Path to the output BibTeX file.")
-    parser.add_argument("--type", choices=['journal', 'conference'], default='conference', help="Type of the publication.")
+    # parser.add_argument("-input_json", default="../record/会议成果_mp_records.json", help="Path to the input JSON file.")
+    # parser.add_argument("-output_bib", default="../bibtex/会议成果.bib", help="Path to the output BibTeX file.")
+    # parser.add_argument("--type", choices=['journal', 'conference'], default='conference', help="Type of the publication.")
+    parser.add_argument("-input_json", default="../record/期刊成果_mp_records.json", help="Path to the input JSON file.")
+    parser.add_argument("-output_bib", default="../bibtex/期刊成果.bib", help="Path to the output BibTeX file.")
+    parser.add_argument("--type", choices=['journal', 'conference'], default='journal', help="Type of the publication.")
     args = parser.parse_args()
 
     with open(args.input_json, "r", encoding="utf-8") as f:
@@ -120,7 +210,7 @@ def main():
         year = extract_year(fields)
 
         pub_type = 'booktitle' if args.type == 'conference' else 'journal'
-        pub_title_key = "投稿会议" if args.type == 'conference' else "期刊名称"
+        pub_title_key = "会议简称" if args.type == 'conference' else "期刊名称"
         publication_title = get_field_value(fields.get(pub_title_key))
 
         if not all([title, authors, year != "YYYY", publication_title]):
@@ -128,23 +218,35 @@ def main():
 
         key = generate_bibtex_key(authors, year, title)
         
-        entry = [f"@inproceedings{{{key},"]
+        # 根据成果类型选择 BibTeX 条目类型：
+        # - 会议：@inproceedings
+        # - 期刊：@article
+        entry_type = "inproceedings" if args.type == "conference" else "article"
+        entry = [f"@{entry_type}{{{key},"]
         entry.append(f"  title        = {{{title}}},")
         entry.append(f"  author       = {{{authors}}},")
         entry.append(f"  {pub_type:<12} = {{{publication_title}}},")
         entry.append(f"  year         = {{{year}}},")
 
+        # 生成精确到日的 time 字段，供合并排序使用
+        if args.type == 'conference':
+            time_val = _parse_conference_time(fields)
+        else:
+            time_val = _parse_journal_time(fields)
+        if time_val:
+            entry.append(f"  time         = {{{time_val}}},")
+
         # --- Optional fields ---
         map_key = "conference" if args.type == 'conference' else "journal"
         optional_fields_map = {
             "journal": {
-                "abbr": "期刊简称", "pdf": "正式发表版链接（检索页）", "code": "代码链接", "demo": "DEMO页面链接",
-                "website": "项目主页", "video": "视频链接", "slides": "Slides 链接", "poster": "Poster 链接",
+                "abbr": "期刊简称", "code": "开源项目链接", "demo": "DEMO页面链接",
+                "website": "公众号链接", "video": "视频链接", "slides": "Slides 链接", "poster": "Poster 链接",
                 "award": "奖项", "award_name": "自定义奖项", "arxiv": "论文avxiv链接"
             },
             "conference": {
-                "abbr": "会议简称", "pdf": "正式发表版链接", "code": "代码链接", "demo": "DEMO页面链接",
-                "website": "项目主页", "video": "视频链接", "slides": "Slides 链接", "poster": "Poster 链接",
+                "abbr": "会议简称", "code": "开源项目链接", "demo": "DEMO页面链接",
+                "website": "公众号链接", "video": "视频链接", "slides": "Slides 链接", "poster": "Poster 链接",
                 "award": "论文奖项", "award_name": "自定义奖项", "arxiv": "论文avxiv链接"
             }
         }
